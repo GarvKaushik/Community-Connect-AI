@@ -1,0 +1,180 @@
+:root {
+  font-family: system-ui, "Noto Sans Devanagari", sans-serif;
+  color: #1f2933;
+  background: #f5f7fa;
+}
+
+body {
+  margin: 0;
+}
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+header h1 {
+  margin: 0 0 8px;
+  font-size: 1.8rem;
+}
+
+header p {
+  margin: 0;
+  color: #52606d;
+  line-height: 1.5;
+}
+
+.language {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.language button {
+  flex: 1;
+  font-size: 1.05rem;
+}
+
+.language button.selected {
+  border-color: #0b6e4f;
+  background: #e3f8ec;
+  color: #0b6e4f;
+  font-weight: 600;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0 12px;
+}
+
+button {
+  font: inherit;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #cbd2d9;
+  background: white;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+button.primary {
+  font-size: 1.15rem;
+  padding: 16px 24px;
+  background: #0b6e4f;
+  border-color: #0b6e4f;
+  color: white;
+}
+
+button.danger {
+  color: #b42318;
+}
+
+.status {
+  font-weight: 600;
+  color: #0b6e4f;
+  min-width: 110px;
+}
+
+.error {
+  color: #b42318;
+}
+
+.log {
+  background: white;
+  border: 1px solid #e4e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  height: 340px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hint {
+  color: #7b8794;
+  margin: auto;
+  text-align: center;
+}
+
+.bubble {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  line-height: 1.45;
+}
+
+.bubble.you {
+  align-self: flex-end;
+  background: #0b6e4f;
+  color: white;
+}
+
+.bubble.assistant {
+  align-self: flex-start;
+  background: #eef2f6;
+}
+
+.chat {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.chat input {
+  flex: 1;
+  font: inherit;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd2d9;
+}
+
+.notice {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: #e3f8ec;
+  color: #0b6e4f;
+  font-weight: 600;
+}
+
+.programs h2 {
+  margin: 28px 0 12px;
+  font-size: 1.2rem;
+}
+
+.programs article {
+  background: white;
+  border: 1px solid #e4e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.programs h3 {
+  margin: 0;
+}
+
+.programs p {
+  margin: 8px 0 0;
+  line-height: 1.45;
+}
+
+.org,
+.source,
+.disclaimer {
+  color: #7b8794;
+  font-size: 0.9rem;
+}
+
+.source a {
+  color: #0b6e4f;
+  word-break: break-all;
+}
