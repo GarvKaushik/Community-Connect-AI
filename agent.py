@@ -7,8 +7,9 @@ import re
 from dotenv import load_dotenv
 
 from livekit import agents, rtc
-from livekit.agents import Agent, AgentSession, RunContext, function_tool
+from livekit.agents import Agent, AgentSession, RunContext, function_tool, metrics
 from livekit.plugins import openai, silero
+from livekit.plugins.turn_detector.multilingual import MultilingualModel
 from faster_whisper import WhisperModel
 
 import requests_store
@@ -23,13 +24,22 @@ logger = logging.getLogger("communityconnect")
 LANGUAGE_RULES = {
     "en": "Always reply in English.",
     "hi": "Always reply in Hindi, in Devanagari script, even after English tool results. "
-    "Keep scheme names as they are. Example of one question per reply: "
+    "A Hindi voice reads your reply, and it mispronounces English letters, so write every "
+    "English word, scheme name and abbreviation in Devanagari as it is pronounced "
+    "(PM-KISAN -> पीएम किसान, Ayushman Bharat -> आयुष्मान भारत, NMMSS -> एनएमएमएसएस), "
+    "and write amounts with the word रुपये, not ₹ or Rs. Example of one question per reply: "
     '"मुझे अपने छोटे भाई की पढ़ाई के लिए मदद चाहिए।" -> '
     '"मैं मदद कर सकता हूँ। क्या वह अभी स्कूल में है या कॉलेज में?"',
 }
 GREETINGS = {
     "en": "Greet the user briefly in English and ask what help they are looking for.",
     "hi": "Greet the user briefly in Hindi and ask what help they are looking for.",
+}
+# Spoken as soon as a search starts, so the caller isn't left in silence while the search
+# and the second model call run (about 2 seconds).
+SEARCH_FILLERS = {
+    "en": "One moment, let me check.",
+    "hi": "एक पल रुकिए, मैं जानकारी देखता हूँ।",
 }
 
 
@@ -156,6 +166,7 @@ class Assistant(Agent):
         """
         category = _clean_category(category)
         education_level = _clean_level(education_level)
+        context.session.say(SEARCH_FILLERS[self.language], add_to_chat_ctx=False)
         # The model's category is a guess and often differs from ours (crop insurance is
         # filed under agriculture, not insurance), so it only ranks results, never hides them.
         results = await asyncio.to_thread(
@@ -271,7 +282,7 @@ async def entrypoint(ctx: agents.JobContext):
     logger.info("session language=%s", language)
 
     session = AgentSession(
-        stt=FasterWhisperSTT(ctx.proc.userdata["whisper_model"], language),
+        stt=FasterWhisperSTT(ctx.proc.userdata["whisper_models"][language], language),
         llm=openai.LLM(
             model=os.getenv("LLM_MODEL", "openai/gpt-oss-120b"),
             base_url=os.getenv("LLM_BASE_URL", "https://api.groq.com/openai/v1"),
@@ -280,25 +291,55 @@ async def entrypoint(ctx: agents.JobContext):
             reasoning_effort=os.getenv("LLM_REASONING_EFFORT", "low"),
         ),
         tts=PiperTTS(ctx.proc.userdata["piper_voices"][language]),
-        vad=silero.VAD.load(),
+        # A slightly higher threshold than the default 0.5, so steady background noise
+        # (fans, speaker hiss) isn't taken as speech. A short silence (0.35 s) starts
+        # transcription sooner; the turn detector below stops this cutting people off.
+        vad=silero.VAD.load(activation_threshold=0.6, min_silence_duration=0.35),
         turn_handling={
-            "interruption": {"enabled": True},
-            "endpointing": {"min_delay": 1.0},
+            # Off by default: on laptop speakers the agent hears its own voice, which would
+            # interrupt it or be answered as if the caller had said it. With interruptions
+            # off, microphone audio is dropped while the agent speaks. Headphone users can set
+            # ALLOW_INTERRUPTIONS=true to talk over the agent.
+            "interruption": {"enabled": os.getenv("ALLOW_INTERRUPTIONS", "false").lower() == "true"},
+            # A local model reads what was said and judges whether the sentence is finished
+            # (English and Hindi). Finished: reply after 0.4 s. Unfinished ("my brother
+            # is in class..."): wait up to 3 s for the rest instead of cutting in.
+            "turn_detection": MultilingualModel(),
+            "endpointing": {"min_delay": 0.4, "max_delay": 3.0},
         },
     )
     assistant = Assistant(ctx.proc.userdata["program_index"], ctx.room, language)
+    # Log each turn's timings (end-of-turn delay, speech-to-text, model, voice) so slow
+    # replies can be traced to the stage causing them.
+    session.on("metrics_collected", lambda event: metrics.log_metrics(event.metrics))
     await session.start(room=ctx.room, agent=assistant)
     await session.generate_reply(instructions=GREETINGS[language])
 
 
+# One speech-to-text model per language: a fast general model for English, and a model
+# fine-tuned on Hindi for Hindi. Any faster-whisper size or Hugging Face repo works here.
+WHISPER_MODELS = {
+    "en": os.getenv("WHISPER_MODEL_EN", "base"),
+    "hi": os.getenv("WHISPER_MODEL_HI", "collabora/faster-whisper-small-hindi"),
+}
+
+
+# Threads for speech-to-text. More threads help only up to a point (on a 12-thread laptop:
+# 3.3 s per Hindi turn by default, 3.0 s with 6, 2.9 s with 12), and using every core starves
+# the rest of the call and the machine. Default: half the cores, at most 6. Inside Docker,
+# os.cpu_count() reports the host's cores, so docker-compose sets STT_THREADS to the
+# container's CPU limit.
+STT_THREADS = int(os.getenv("STT_THREADS") or max(1, min(6, (os.cpu_count() or 4) // 2)))
+
+
+def load_whisper(name: str) -> WhisperModel:
+    return WhisperModel(name, device="cpu", compute_type="int8", download_root="models/whisper",
+                        cpu_threads=STT_THREADS)
+
+
 def prewarm(proc: agents.JobProcess) -> None:
     requests_store.initialize()
-    proc.userdata["whisper_model"] = WhisperModel(
-        os.getenv("WHISPER_MODEL", "small"),
-        device="cpu",
-        compute_type="int8",
-        download_root="models/whisper",
-    )
+    proc.userdata["whisper_models"] = {language: load_whisper(name) for language, name in WHISPER_MODELS.items()}
     proc.userdata["piper_voices"] = load_piper_voices()
     proc.userdata["program_index"] = ProgramIndex(Embedder())
 
@@ -308,7 +349,12 @@ if __name__ == "__main__":
         agents.WorkerOptions(
             entrypoint_fnc=entrypoint,
             prewarm_fnc=prewarm,
-            # Loading Whisper, both voices and the index takes ~15 s on CPU.
-            initialize_process_timeout=60,
+            # Loading both Whisper models, both voices and the index takes ~20-60 s on CPU,
+            # longer in a CPU-capped container, so allow plenty of time.
+            initialize_process_timeout=float(os.getenv("AGENT_INIT_TIMEOUT", "120")),
+            # Each ready process loads every model (~1.2 GB). LiveKit keeps 4 ready in
+            # production by default; one is enough for a demo or a small server.
+            num_idle_processes=int(os.getenv("AGENT_IDLE_PROCESSES", "1")),
+            job_memory_warn_mb=2000,
         )
     )

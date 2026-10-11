@@ -33,7 +33,7 @@ Browser  <--audio, live transcript, program cards with sources--  LiveKit room
 | Layer | Choice |
 | --- | --- |
 | Voice transport | LiveKit Agents 1.8.1 |
-| Speech to text | faster-whisper `small` (int8, CPU) |
+| Speech to text | faster-whisper, int8 on CPU: `base` for English, `collabora/faster-whisper-small-hindi` for Hindi |
 | LLM | Groq `openai/gpt-oss-120b` through the OpenAI-compatible API |
 | RAG | Multilingual MiniLM embeddings (ONNX), in-memory cosine search with metadata filters |
 | Text to speech | Piper `en_US-lessac-medium` and `hi_IN-pratham-medium` |
@@ -60,10 +60,11 @@ rag.py                      Embeddings and program search
 requests_store.py           SQLite storage and validation for help requests
 notifications.py            Telegram alerts to volunteers
 server.py                   FastAPI: LiveKit token endpoint, serves frontend/dist
+Dockerfile, docker-compose.yml  Container setup (web server + voice agent)
 knowledge_base/programs.json  The program knowledge base
 evals/golden_dataset.jsonl  Test cases for retrieval and LLM evaluation
 evals/run_eval.py           Scores the assistant against the test cases
-frontend/                   React app
+frontend/                   React app (assistant page and About page, src/About.jsx)
 ```
 
 ## Setup
@@ -86,7 +87,7 @@ cd ..
 Copy `.env.example` to `.env` and fill in the LiveKit URL, key and secret, and
 `LLM_API_KEY` (an existing `GROQ_API_KEY` also works). Telegram is optional.
 
-Models download themselves on the first run into `models/`: the Whisper model, both Piper
+Models download themselves on the first run into `models/`: the two Whisper models, both Piper
 voices and the embedding model, roughly 1 GB in total.
 
 ### Telegram (optional)
@@ -125,6 +126,33 @@ python agent.py console
 ```
 
 The console has no language picker; set `AGENT_LANGUAGE=hi` in `.env` for Hindi.
+
+## Running with Docker
+
+With [Docker Desktop](https://www.docker.com/products/docker-desktop/) running and a filled-in
+`.env` in the project root:
+
+```powershell
+docker compose up --build
+```
+
+Open http://localhost:8000. The first build takes a while because it downloads the Python
+packages and about 1 GB of models into the image; later starts are immediate. Saved help
+requests are written to `data/` on your machine. Stop with `Ctrl+C`, or run
+`docker compose up -d` to keep it running in the background and `docker compose down` to stop.
+
+The image is about 3.3 GB. The agent container keeps one call process ready, uses about
+3.2 GB of RAM, and takes about 50 seconds to load its models after starting (startup limit:
+`AGENT_INIT_TIMEOUT`, default 120 s). Wait for "process initialized" in the agent logs
+before the first call. Set `AGENT_IDLE_PROCESSES` in `.env` to keep more ready for several
+simultaneous calls; each extra one needs about another 1.5 GB.
+
+The agent container is limited to 4 CPUs (`AGENT_CPUS` in `.env`), because speech-to-text
+uses every CPU it can get and would otherwise slow the whole machine on each turn. On a
+dedicated server, raise it; beyond about 6 the speed gain is small.
+
+Don't run `python agent.py dev` at the same time as the containers: both would register
+with your LiveKit project, and calls could go to either.
 
 ## Demo
 
@@ -382,10 +410,32 @@ an unrelated scheme that the search returned, instead of saying nothing was foun
 
 ## Known limitations
 
-- Speech-to-text takes about 3 seconds per turn on a laptop CPU with `small`.
-  `WHISPER_MODEL=base` is about three times as fast but much weaker at Hindi.
+- Speech-to-text takes about 1 second per turn in English and 3 seconds in Hindi on a laptop
+  CPU. English uses the fast `base` model, which mishears scheme names more often ("Ayushman
+  Bharat" can come out as "I Usman Barrett"); set `WHISPER_MODEL_EN=small` for better accuracy
+  at about 3 seconds per turn.
 - The language is fixed for a conversation. To switch, press **End** and start again.
+- A single spoken word, such as a city name on its own, is sometimes misheard ("Delhi" as
+  "Daily"). Sentences, yes/no answers and phone numbers are recognised reliably. The Hindi
+  model tends to invent text from noise or keep going after you stop, so its output is
+  filtered: non-speech is dropped, only words inside your audio are kept, and repeated
+  phrases are removed.
+- You can't talk over the assistant: the microphone is ignored while it speaks. On laptop
+  speakers it would otherwise hear its own voice, and interrupt itself or answer its own
+  questions. With headphones, set `ALLOW_INTERRUPTIONS=true` to allow interrupting.
+- A reply takes about 5 seconds in English and 7 in Hindi when a search is needed: the
+  agent waits for about 1.3 s of silence to be sure you've finished, then transcribes,
+  searches and calls the model twice. A pause longer than that mid-sentence ends your turn
+  early. Each turn's timings are logged in the agent's terminal. It says "One moment, let me check" as the search starts, so the wait isn't silent.
 - Speech-to-text and text-to-speech are not streaming, so replies start only after the
   full sentence is transcribed and synthesized.
 - Groq's free tier allows about 8,000 tokens per minute, which a long conversation can reach.
 - There is no volunteer dashboard. Requests are followed up from Telegram and the SQLite file.
+
+## Credits
+
+- Hindi speech recognition: [`collabora/faster-whisper-small-hindi`](https://huggingface.co/collabora/faster-whisper-small-hindi)
+  by Collabora, licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+- English speech recognition: OpenAI Whisper `base`, via [faster-whisper](https://github.com/SYSTRAN/faster-whisper) (MIT).
+- Voices: [Piper](https://github.com/rhasspy/piper) `en_US-lessac-medium` and `hi_IN-pratham-medium`.
+- Embeddings: [`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2) (Apache 2.0).

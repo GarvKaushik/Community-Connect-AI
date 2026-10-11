@@ -3,6 +3,7 @@ livekit==1.1.18
 livekit-api==1.2.1
 livekit-plugins-openai==1.8.1
 livekit-plugins-silero==1.8.1
+livekit-plugins-turn-detector==1.8.1
 livekit-local-inference==0.2.7
 livekit-blingfire==1.1.0
 livekit-protocol==1.1.26

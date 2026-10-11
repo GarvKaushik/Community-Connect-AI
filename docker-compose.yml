@@ -1,0 +1,25 @@
+services:
+  web:
+    build: .
+    image: communityconnect-ai
+    env_file: .env
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  agent:
+    build: .   # same image as web; the second build is served from cache
+    image: communityconnect-ai
+    depends_on:
+      - web
+    env_file: .env
+    command: ["python", "agent.py", "start"]
+    # Speech-to-text uses every CPU it is given, so cap the container to keep the rest of the
+    # machine responsive. STT_THREADS must match: inside a container, Python still sees all of
+    # the host's cores.
+    cpus: ${AGENT_CPUS:-4}
+    environment:
+      STT_THREADS: ${AGENT_CPUS:-4}
+    volumes:
+      - ./data:/app/data   # saved help requests stay on your machine
+    restart: unless-stopped

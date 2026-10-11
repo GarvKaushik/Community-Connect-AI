@@ -20,6 +20,7 @@ PIPER_VOICES = {
     "en": ("en/en_US/lessac/medium", "en_US-lessac-medium"),
     "hi": ("hi/hi_IN/pratham/medium", "hi_IN-pratham-medium"),
 }
+SENTENCE_PAUSE_SECONDS = 0.35
 _UNSPOKEN = re.compile(r"\([^)]*\)|\[[^\]]*\]|[*#_`]")
 
 
@@ -40,6 +41,20 @@ def load_piper_voices() -> dict[str, PiperVoice]:
             shutil.rmtree(PIPER_DIR / "_hf", ignore_errors=True)
         voices[language] = PiperVoice.load(str(model_path))
     return voices
+
+
+def _drop_repeats(text: str) -> str:
+    """Remove a phrase of up to four words that is immediately repeated
+    ("बारह साल बारह साल" -> "बारह साल"), a common Whisper looping error."""
+    words = text.split()
+    for size in range(4, 0, -1):
+        i = 0
+        while i + 2 * size <= len(words):
+            if words[i:i + size] == words[i + size:i + 2 * size]:
+                del words[i + size:i + 2 * size]
+            else:
+                i += 1
+    return " ".join(words)
 
 
 class FasterWhisperSTT(stt.STT):
@@ -93,14 +108,30 @@ class FasterWhisperSTT(stt.STT):
             container.close()
 
         audio = np.concatenate(samples) if samples else np.empty(0, dtype=np.float32)
+        if audio.size == 0:
+            return ""
+        duration = audio.size / 16_000
         segments, _ = self._model.transcribe(
             audio,
             language=self._language,
             beam_size=1,
-            vad_filter=False,
             condition_on_previous_text=False,
+            # The Hindi model invents whole sentences from background noise (its "no speech"
+            # score is always 0), taking 30-60 s on a capped CPU. Whisper's own speech filter
+            # drops noise first, so it returns nothing in a fraction of a second instead.
+            vad_filter=True,
+            # A single attempt. By default a bad result is retried at higher temperatures,
+            # each retry another full transcription (~10 s each).
+            temperature=0.0,
+            # Hindi needs many tokens per second; the cap only stops runaway output.
+            max_new_tokens=min(440, int(duration * 60) + 40),
+            word_timestamps=True,
         )
-        return "".join(segment.text for segment in segments).strip()
+        # Keep only words that start inside the audio: the Hindi model sometimes keeps
+        # "talking" past the end ("दिल्ली जी जी जी…").
+        words = [word for segment in segments for word in (segment.words or [])]
+        text = "".join(word.word for word in words if word.start < duration - 0.05).strip()
+        return _drop_repeats(text)
 
 
 class PiperTTS(tts.TTS):
@@ -140,7 +171,10 @@ class PiperTTS(tts.TTS):
             pcm_chunks.append(
                 (np.clip(chunk.audio_float_array, -1.0, 1.0) * 32767).astype(np.int16).tobytes()
             )
-        return b"".join(pcm_chunks)
+        # Piper returns one chunk per sentence with no silence in between, so sentences ran
+        # together. Add a short pause between sentences and after each spoken segment.
+        pause = bytes(2 * int(self.sample_rate * SENTENCE_PAUSE_SECONDS))
+        return pause.join(pcm_chunks) + pause
 
 
 class _PiperChunkedStream(tts.ChunkedStream):
