@@ -45,6 +45,10 @@ Category = Literal[
     "disability",
     "women_child_welfare",
     "food",
+    "agriculture",
+    "housing",
+    "insurance",
+    "pension",
 ]
 
 INSTRUCTIONS = """\

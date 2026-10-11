@@ -9,7 +9,9 @@
     "eligibility": "Student must study as a regular student in a Government, Government-aided or local body school. Family income must not be more than Rs 3,50,000 a year. Needs at least 55% marks in Class 7 to sit the test, and 55% in Class 8 when selected (5% less for SC/ST). Kendriya Vidyalaya, Navodaya Vidyalaya, government residential school and private school students cannot apply.",
     "min_age": null,
     "max_age": null,
-    "locations": ["All India"],
+    "locations": [
+      "All India"
+    ],
     "benefits": "Rs 12,000 per year (Rs 1,000 per month) for up to four years, Class 9 to Class 12. Money goes straight to the student's bank account. To continue in Class 11 and 12, the student needs 60% marks in Class 10 (5% less for SC/ST) and must pass each class in the first try.",
     "documents": [],
     "how_to_apply": "1. In Class 8, take the NMMSS selection test held by your State (usually in November). It has two papers: Mental Ability Test and Scholastic Aptitude Test. 2. Pass with at least 40% total (32% for SC/ST). 3. If selected, apply on the National Scholarship Portal and renew your application there every year.",
@@ -27,7 +29,9 @@
     "eligibility": "Must be above the 80th percentile (top 20%) of passed students in your stream in your Class 12 board. Family income up to Rs 4.5 lakh a year. Must study a regular degree course (not distance or diploma) at a recognised college. Must not get any other scholarship or fee waiver. Students who took a gap year after Class 12 cannot apply.",
     "min_age": null,
     "max_age": null,
-    "locations": ["All India"],
+    "locations": [
+      "All India"
+    ],
     "benefits": "Rs 12,000 per year for the first three years of graduation and Rs 20,000 per year for post-graduation. B.Tech/BE students get Rs 20,000 in the 4th year. Money is paid into your Aadhaar-linked bank account. To renew each year, you need at least 50% marks and 75% attendance.",
     "documents": [
       "Class 12 mark sheet",
@@ -53,7 +57,9 @@
     "eligibility": "Children belonging to a 'weaker section' or 'disadvantaged group' who live in the school's neighbourhood. The RTE Act gives every child aged 6 to 14 the right to free and compulsory education. Check the exact rules and income limit with your State or district education office.",
     "min_age": null,
     "max_age": null,
-    "locations": ["All India"],
+    "locations": [
+      "All India"
+    ],
     "benefits": "Free education in a private unaided school, from Class 1 until elementary education is complete.",
     "documents": [],
     "how_to_apply": "",
@@ -70,7 +76,9 @@
     "eligibility": "Children studying in Bal Vatika (the class just before Class 1) and Classes 1 to 8 in Government and Government-aided schools. The scheme is run by State Governments, and menus differ by state.",
     "min_age": null,
     "max_age": null,
-    "locations": ["All India"],
+    "locations": [
+      "All India"
+    ],
     "benefits": "One hot cooked meal on every school working day. Primary classes: 450 calories and 12 g protein per child per day. Upper primary classes: 700 calories and 20 g protein. States choose menus using local foods like millets and vegetables.",
     "documents": [],
     "how_to_apply": "Enrol your child in a Government or Government-aided school. The meal is given at school on all school working days.",
@@ -87,7 +95,9 @@
     "eligibility": "Poor and vulnerable families identified using the Socio-Economic Caste Census 2011 (about 12 crore families), plus ASHA and Anganwadi workers and their families. No limit on family size or age. All seniors aged 70+ are eligible whatever their income, through the Ayushman Vay Vandana Card. In 2024 a few states were not in the scheme; check locally.",
     "min_age": null,
     "max_age": null,
-    "locations": ["All India"],
+    "locations": [
+      "All India"
+    ],
     "benefits": "Up to Rs 5 lakh per family per year for hospital care, cashless at empanelled hospitals anywhere in India. Covers 3 days before and 15 days after the hospital stay (tests and medicines). Old illnesses are covered from day one. People aged 70+ get their own Rs 5 lakh cover, even if their family is already covered.",
     "documents": [],
     "how_to_apply": "Seniors aged 70+ can register at the nearest empanelled hospital, through the Ayushman app, or at www.beneficiary.nha.gov.in. Call 14555 to know more. At an empanelled hospital, treatment is cashless for eligible people.",
@@ -104,7 +114,9 @@
     "eligibility": "Women aged 18 years 7 months to 55 years at childbirth who meet any one condition: SC/ST; 40%+ disability; BPL or NFSA ration card; PM-JAY, e-Shram, PM-Kisan or MGNREGA job card holder; family income under Rs 8 lakh a year; or pregnant ASHA/Anganwadi worker. Not run in Telangana and Odisha, which have their own schemes.",
     "min_age": 18,
     "max_age": 55,
-    "locations": ["All India"],
+    "locations": [
+      "All India"
+    ],
     "benefits": "First child: Rs 5,000 in two parts. Rs 3,000 after registering the pregnancy and at least two check-ups, and Rs 2,000 after birth registration and the baby's first vaccines (14 weeks). Second child, if a girl: Rs 6,000 in one payment after birth and vaccines. Paid to an Aadhaar-linked bank or post office account.",
     "documents": [
       "Aadhaar card",
@@ -125,12 +137,14 @@
     "id": "indira-gandhi-old-age-pension",
     "name": "Indira Gandhi National Old Age Pension Scheme (IGNOAPS) - National Social Assistance Programme",
     "organization": "Ministry of Rural Development",
-    "category": "financial_assistance",
+    "category": "pension",
     "description": "A monthly pension for elderly people from poor (below poverty line) families. It is part of the National Social Assistance Programme.",
     "eligibility": "People aged 60 years or more who belong to families living below the poverty line (BPL). States add their own money, so the total pension is different in each state.",
     "min_age": 60,
     "max_age": null,
-    "locations": ["All India"],
+    "locations": [
+      "All India"
+    ],
     "benefits": "The Central Government gives Rs 200 per month for ages 60 to 79, and Rs 500 per month for age 80 and above. States add a top-up of Rs 50 to Rs 5,700 per month, so many states pay around Rs 1,100 in total. Paid mostly into a bank or post office account.",
     "documents": [],
     "how_to_apply": "Contact your Gram Panchayat (village) or Municipality (town). They help identify eligible people. The scheme is run by your State Government.",
@@ -147,9 +161,13 @@
     "eligibility": "Every rural household whose adult members are willing to do unskilled manual work. Old MGNREGA job cards with completed e-KYC stay valid until new Gramin Rozgar Guarantee Cards are given. States can pause work for up to 60 days in peak farm seasons, and each State runs its own scheme under the Act.",
     "min_age": null,
     "max_age": null,
-    "locations": ["All India"],
+    "locations": [
+      "All India"
+    ],
     "benefits": "Up to 125 days of paid work per household each year. Wages are paid weekly, or within 15 days, into a bank or post office account, with extra pay if late. If work is not given in time, you get an unemployment allowance. Worksites must have drinking water, shade, first aid, and childcare when five or more small children are present.",
-    "documents": ["MGNREGA Job Card (e-KYC verified) or Gramin Rozgar Guarantee Card"],
+    "documents": [
+      "MGNREGA Job Card (e-KYC verified) or Gramin Rozgar Guarantee Card"
+    ],
     "how_to_apply": "1. If you have no job card, apply at your Gram Panchayat to register and get a new card. 2. Ask for work by speaking, in writing (Form-6), or online. 3. Work must be given within the set time; if not, you get unemployment allowance.",
     "contact": "",
     "source_url": "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/may/doc2026511867601.pdf",
@@ -164,9 +182,13 @@
     "eligibility": "Indian citizens with a valid Aadhaar who meet the course's requirements. Short-term training: age 15 to 45. Recognition of Prior Learning (for people with work experience): age 18 to 59. Special focus on backward, border, tribal and aspirational districts.",
     "min_age": 15,
     "max_age": 59,
-    "locations": ["All India"],
+    "locations": [
+      "All India"
+    ],
     "benefits": "Free skill training, with on-the-job training in many courses, and a skill certificate after you pass the assessment. One free re-assessment if you fail. Courses include new areas like AI, drones, solar energy and 5G.",
-    "documents": ["Aadhaar card"],
+    "documents": [
+      "Aadhaar card"
+    ],
     "how_to_apply": "Register on Skill India Digital (www.skillindiadigital.gov.in) or its mobile app, and verify your profile with a mobile OTP. Training is given at Skill India Centres.",
     "contact": "www.skillindiadigital.gov.in",
     "source_url": "https://www.msde.gov.in/static/uploads/2024/02/PMKVY-4.0-Guidelines_final-copy.pdf",
@@ -181,7 +203,9 @@
     "eligibility": "Indian citizen of any age with a UDID card (or enrolment number) and a disability certificate showing at least 40% disability. Monthly income (own, or parents' for dependents) up to Rs 30,000. Must not have received help for the same aid in the last 3 years (1 year for children under 12).",
     "min_age": null,
     "max_age": null,
-    "locations": ["All India"],
+    "locations": [
+      "All India"
+    ],
     "benefits": "Income up to Rs 22,500 a month: full cost of the aid. Income Rs 22,501 to Rs 30,000: half the cost. Motorised tricycle or wheelchair (80%+ disability, age 16+) up to Rs 50,000. Cochlear implant for young children up to Rs 7 lakh. Travel costs up to Rs 250 are also paid.",
     "documents": [
       "UDID card or UDID enrolment number",
@@ -203,7 +227,9 @@
     "eligibility": "Any woman affected by violence or in distress, at home or in public. Her daughters of any age and sons up to 12 can stay with her in the temporary shelter. Girls under 18 are also helped with child protection authorities. Anyone can call 181 on behalf of a woman in distress.",
     "min_age": null,
     "max_age": null,
-    "locations": ["All India"],
+    "locations": [
+      "All India"
+    ],
     "benefits": "At the One Stop Centre: medical aid, legal aid and advice, police help, counselling, and temporary shelter for up to 5 days, all under one roof. Helpline 181 works 24x7, links women to police, One Stop Centres, hospitals and legal services, and gives information about government schemes for women.",
     "documents": [],
     "how_to_apply": "Call 181 (Women Helpline) at any time, or 112 in an emergency. You can also go to the One Stop Centre in your district, which is usually in or near a government hospital.",
@@ -220,12 +246,801 @@
     "eligibility": "Families identified by the State Government as 'Priority Households' or 'Antyodaya Anna Yojana' (poorest) households. The Act covers up to 75% of rural people and 50% of urban people. Your State decides which families qualify.",
     "min_age": null,
     "max_age": null,
-    "locations": ["All India"],
+    "locations": [
+      "All India"
+    ],
     "benefits": "Priority households: 5 kg of grains per person per month. Antyodaya families: 35 kg per family per month. Free of cost under PMGKAY. With One Nation One Ration Card, you can take your ration from any fair price shop in India. The Act also gives free meals to pregnant women and young children through Anganwadis.",
     "documents": [],
     "how_to_apply": "Ration cards are issued by your State Government, so apply to your State food department. The eldest woman (18 or older) in the family is made head of the household on the card. Then collect your grains every month at your fair price shop.",
     "contact": "Toll-free 1967",
     "source_url": "https://dfpd.gov.in/WriteReadData/Other/nfsa_1.pdf",
     "last_checked": "2026-10-04"
+  },
+  {
+    "id": "pm-kisan-samman-nidhi",
+    "name": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+    "organization": "Department of Agriculture and Farmers Welfare, Ministry of Agriculture and Farmers Welfare",
+    "category": "agriculture",
+    "audience": "farmer",
+    "description": "The central government sends ₹6,000 a year straight into the bank accounts of farmer families who own farm land.",
+    "eligibility": "Farmer families (husband, wife and minor children) who own cultivable land in their names in state land records. Not eligible: institutional landholders, families with a member who paid income tax last year, current or former MPs, MLAs or ministers, government employees (except Group D), pensioners getting ₹10,000 or more a month, and practising doctors, engineers, lawyers, CAs or architects.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "₹6,000 a year, paid in three instalments of ₹2,000 each: April to July, August to November, and December to March. Money goes directly to your bank account.",
+    "documents": [
+      "Aadhaar card",
+      "Land ownership papers",
+      "Savings bank account details"
+    ],
+    "how_to_apply": "Register yourself on pmkisan.gov.in using New Farmer Registration with your Aadhaar and mobile number, or go to a Common Service Centre (CSC). You can also apply through your village patwari or revenue officer. eKYC is compulsory. Check your status with Know Your Status on the website.",
+    "contact": "https://pmkisan.gov.in/",
+    "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines(English).pdf",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "pmay-gramin",
+    "name": "Pradhan Mantri Awaas Yojana–Gramin (PMAY-G)",
+    "organization": "Ministry of Rural Development",
+    "category": "housing",
+    "audience": "household",
+    "description": "Government money to help poor rural families build a pucca house. The house must be at least 25 square metres, with a space for cooking. The scheme runs until March 2029 to build 2 crore more houses.",
+    "eligibility": "Rural families with no house, or a kutcha house of 2 rooms or less, whose names are on the PMAY-G list checked by the Gram Sabha. A family is left out if any member earns over Rs 15,000 a month, is a government employee, or pays income tax, or if it owns 2.5 acres or more of irrigated land.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "Rs 1.20 lakh to build the house in plain areas, or Rs 1.30 lakh in North Eastern and hilly states, including Jammu and Kashmir and Ladakh. You also get 90 to 95 days of paid work under MGNREGA to build your own house, and Rs 12,000 to build a toilet.",
+    "documents": [
+      "Aadhaar card",
+      "Bank or post office account details",
+      "MGNREGA job card number",
+      "Mobile number"
+    ],
+    "how_to_apply": "You cannot apply for the money on your own. Families are chosen from the official list. Ask your Gram Panchayat or Block office if your name is on the list. If it is not, ask about the Awaas+ 2024 survey. The Awaas+ 2024 mobile app also has a self-survey option.",
+    "contact": "Gram Panchayat or Block Development Office. Website: https://pmayg.dord.gov.in/",
+    "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2080091",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "pmay-urban-2",
+    "name": "Pradhan Mantri Awas Yojana–Urban 2.0 (PMAY-U 2.0)",
+    "organization": "Ministry of Housing and Urban Affairs",
+    "category": "housing",
+    "audience": "household",
+    "description": "Help for poor and middle-income families in towns and cities to build, buy or rent a pucca house, or get help with a home loan. It runs for 5 years from September 2024.",
+    "eligibility": "Urban families with no pucca house anywhere in India. Yearly family income up to Rs 3 lakh (EWS), Rs 3 to 6 lakh (LIG), or Rs 6 to 9 lakh (MIG). Help to build or buy a low-cost house is only for EWS families. Families who got a government house in the last 20 years cannot apply.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "EWS families building on own land or buying a low-cost house get at least Rs 2.5 lakh from Centre and State, and pay at least 25 percent of the cost. Home loan help: 4 percent interest subsidy on the first Rs 8 lakh of a loan, up to Rs 1.80 lakh in total, for loans up to Rs 25 lakh.",
+    "documents": [
+      "Aadhaar card or Aadhaar Virtual ID of all family members",
+      "Self-declaration of income and of having no pucca house",
+      "Land ownership papers (if building on your own land)",
+      "Bank account details"
+    ],
+    "how_to_apply": "Apply online at https://pmay-urban.gov.in or go to your city municipal office (Urban Local Body) for help. Aadhaar is needed for all family members. You must sign a self-declaration that your family has no pucca house. The house is put in the name of the woman of the family, or in joint names.",
+    "contact": "Your city municipal office (Urban Local Body). PMAY-U office phone: 011-23063285. Website: https://pmay-urban.gov.in/",
+    "source_url": "https://pmay-urban.gov.in/uploads/guidelines/Operational-Guidelines-of-PMAY-U-2.pdf",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "pradhan-mantri-ujjwala-yojana",
+    "name": "Pradhan Mantri Ujjwala Yojana (PMUY)",
+    "organization": "Ministry of Petroleum and Natural Gas",
+    "category": "financial_assistance",
+    "audience": "household",
+    "description": "Gives a free (deposit-free) LPG gas connection, first refill and gas stove to women from poor households.",
+    "eligibility": "A woman aged 18 or above from a poor household with no LPG connection in the home. She must belong to one of these: SC, ST, PM Awas Yojana (Gramin), Most Backward Classes, Antyodaya Anna Yojana, tea garden tribes, forest dwellers, island residents, SECC list, or a poor household by 14-point declaration. Men cannot apply.",
+    "min_age": 18,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "The government pays ₹1,600 for a 14.2 kg connection or ₹1,150 for a 5 kg connection. This covers the cylinder deposit, regulator, hose, consumer card and installation. The first refill and the stove are also free.",
+    "documents": [
+      "Aadhaar of the woman applicant",
+      "Ration card or other state document showing family members (or self-declaration for migrants)",
+      "Aadhaar of adult family members",
+      "Bank account number and IFSC",
+      "Address proof if the connection address differs from Aadhaar"
+    ],
+    "how_to_apply": "Apply online at pmuy.gov.in by choosing Indane, Bharatgas or HP Gas and your distributor, then visit the gas agency with your reference number. Or apply directly at a nearby LPG distributor. Migrant families without a ration card can give a self-declaration.",
+    "contact": "Ujjwala Helpline: 14438; LPG toll-free: 14428; LPG emergency: 1906; https://www.pmuy.gov.in/",
+    "source_url": "https://pmuy.gov.in/about.html",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "pradhan-mantri-jan-dhan-yojana",
+    "name": "Pradhan Mantri Jan-Dhan Yojana (PMJDY)",
+    "organization": "Department of Financial Services, Ministry of Finance",
+    "category": "financial_assistance",
+    "audience": "adult",
+    "description": "A free basic savings bank account for people who do not have any bank account. It comes with a RuPay debit card and accident insurance.",
+    "eligibility": "Any Indian citizen who does not already have a bank account. Children above 10 years can open an account with help from a parent or guardian.",
+    "min_age": 10,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "No minimum balance needed. You earn interest. Free RuPay debit card with ₹2 lakh accident insurance (₹1 lakh for accounts opened before 28 August 2018). Overdraft up to ₹10,000 for eligible account holders. Government benefits (DBT), PMJJBY, PMSBY, APY and MUDRA can be linked to this account.",
+    "documents": [
+      "Aadhaar card",
+      "Voter ID, PAN card or ration card",
+      "Address proof such as electricity, water or phone bill, driving licence or passport",
+      "Passport-size photo",
+      "Filled and signed account opening form"
+    ],
+    "how_to_apply": "Go to any bank branch or Bank Mitra (business correspondent) and ask for a Jan Dhan account. Fill the account opening form. If you have no documents, you can open a small account (chhota khata) for 12 months and get more time if you apply for an ID document.",
+    "contact": "Toll-free: 1800 11 0001 or 1800 180 1111; https://www.pmjdy.gov.in/",
+    "source_url": "https://www.pmjdy.gov.in/scheme",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "pm-jeevan-jyoti-bima-yojana",
+    "name": "Pradhan Mantri Jeevan Jyoti Bima Yojana (PMJJBY)",
+    "organization": "Department of Financial Services, Ministry of Finance",
+    "category": "insurance",
+    "audience": "adult",
+    "description": "Life insurance for ₹436 a year. If you die from any cause, your nominee gets ₹2 lakh.",
+    "eligibility": "Anyone aged 18 to 50 with a savings account in a bank or post office can join. Once joined, you can renew every year until age 55. You can join through only one account.",
+    "min_age": 18,
+    "max_age": 50,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "₹2 lakh paid to your nominee if you die from any cause, including illness, accident, disaster or suicide. Cover runs 1 June to 31 May. For new members, death from causes other than accident in the first 30 days is not covered. No medical test needed.",
+    "documents": [
+      "Savings bank or post office account",
+      "Filled enrolment and auto-debit consent form",
+      "Aadhaar number",
+      "Nominee details"
+    ],
+    "how_to_apply": "Fill the PMJJBY form at your bank or post office, or use net banking, and agree to auto-debit. Premium is ₹436 if you join in June to August, ₹342 in September to November, ₹228 in December to February, and ₹114 in March to May. Full ₹436 is cut every year at renewal; keep enough balance before 1 June.",
+    "contact": "Toll-free: 1800-180-1111 or 1800-110-001; https://jansuraksha.gov.in/",
+    "source_url": "https://financialservices.gov.in/pmjjby",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "pm-suraksha-bima-yojana",
+    "name": "Pradhan Mantri Suraksha Bima Yojana (PMSBY)",
+    "organization": "Department of Financial Services, Ministry of Finance",
+    "category": "insurance",
+    "audience": "adult",
+    "description": "Accident insurance for ₹20 a year. It pays ₹2 lakh if you die or are fully disabled in an accident.",
+    "eligibility": "Anyone aged 18 to 70 with a savings account in a bank or post office. You can join through only one account. Cover ends at age 70.",
+    "min_age": 18,
+    "max_age": 70,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "Accidental death: ₹2 lakh to the nominee. Loss of both eyes, both hands or feet, or one eye and one hand or foot: ₹2 lakh. Loss of one eye, or use of one hand or foot: ₹1 lakh. Suicide is not covered. Hospital bills are not paid. Cover runs 1 June to 31 May each year.",
+    "documents": [
+      "Savings bank or post office account",
+      "Filled enrolment and auto-debit consent form",
+      "Aadhaar number",
+      "Nominee details"
+    ],
+    "how_to_apply": "Fill the PMSBY form at your bank or post office, or use net banking, and agree to auto-debit. ₹20 is cut from your account once a year. Keep enough balance before 1 June. For road or rail accidents, drowning or crime, report it to the police; for snake bite or falls, keep the hospital record.",
+    "contact": "Toll-free: 1800-180-1111 or 1800-110-001; https://jansuraksha.gov.in/",
+    "source_url": "https://financialservices.gov.in/pmsby",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "atal-pension-yojana",
+    "name": "Atal Pension Yojana (APY)",
+    "organization": "Department of Financial Services, Ministry of Finance",
+    "category": "pension",
+    "audience": "adult",
+    "description": "A pension scheme where you save a small fixed amount every month until age 60, then get a fixed monthly pension of ₹1,000 to ₹5,000 for life, guaranteed by the Government of India.",
+    "eligibility": "Indian citizens aged 18 to 40 with a savings account in a bank or post office. You must join before your 40th birthday. Since 1 October 2022, anyone who is or has been an income tax payer cannot join.",
+    "min_age": 18,
+    "max_age": 39,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "Choose a pension of ₹1,000, ₹2,000, ₹3,000, ₹4,000 or ₹5,000 a month from age 60. After your death, your husband or wife gets the same pension. After both die, the nominee gets the saved money. Example monthly payment if you join at 18: ₹42 for ₹1,000 pension, ₹210 for ₹5,000 pension. Joining at 40 costs ₹291 for ₹1,000 pension.",
+    "documents": [
+      "Savings bank or post office account (KYC is taken from this account)",
+      "Aadhaar number",
+      "Mobile number",
+      "Husband or wife and nominee details"
+    ],
+    "how_to_apply": "Go to the bank or post office where you have a savings account and fill the APY form, or join through net banking. Choose your pension amount and nominee. Money is cut automatically from your account every month, quarter or half-year until age 60. A late payment costs ₹1 for every ₹100 per month.",
+    "contact": "https://financialservices.gov.in/atal-pension-yojana",
+    "source_url": "https://financialservices.gov.in/atal-pension-yojana",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "pm-vishwakarma",
+    "name": "PM Vishwakarma Scheme",
+    "organization": "Ministry of Micro, Small and Medium Enterprises, Ministry of Skill Development and Entrepreneurship, and Department of Financial Services",
+    "category": "employment",
+    "audience": "adult",
+    "description": "Help for traditional artisans and craftspeople in 18 trades, such as carpenter, blacksmith, goldsmith, potter, cobbler, mason, tailor, barber, washerman and basket maker. It gives recognition, training, tools, cheap loans and selling support. It runs until 2027-28.",
+    "eligibility": "Artisans aged 18 or above who work with hands and tools in one of the 18 trades, for themselves. You must not have taken a business loan under PMEGP, PM SVANidhi or Mudra in the last 5 years. Only one member per family (husband, wife and unmarried children). Government employees and their families cannot apply.",
+    "min_age": 18,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "Certificate and ID card. 5 to 7 days basic training and optional 15 days advanced training, with Rs 500 per day stipend. Toolkit worth up to Rs 15,000. Loans without collateral: up to Rs 1 lakh, then up to Rs 2 lakh, at 5 percent interest. Re 1 per digital payment, up to 100 payments a month. Help with selling.",
+    "documents": [
+      "Aadhaar card",
+      "Mobile number",
+      "Bank account linked to Aadhaar",
+      "Ration card (if no ration card, Aadhaar numbers of all family members)"
+    ],
+    "how_to_apply": "Go to your nearest Common Service Centre (CSC) or apply on the PM Vishwakarma portal. Registration is free. Aadhaar is checked by fingerprint. The Gram Panchayat or city office, then a district committee, check your application. The target of 30 lakh registrations was reached in 2025, so first ask the CSC if new registration is open.",
+    "contact": "Toll-free helpline 18002677777, or your nearest Common Service Centre. Website: https://pmvishwakarma.gov.in/",
+    "source_url": "https://pmvishwakarma.gov.in/cdn/MiscFiles/eng_v30.0_PM_Vishwakarma_Guidelines_final.pdf",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "pm-svanidhi",
+    "name": "PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi)",
+    "organization": "Ministry of Housing and Urban Affairs and Department of Financial Services",
+    "category": "employment",
+    "audience": "adult",
+    "description": "Provides eligible street vendors access to collateral-free working-capital credit and supports digital transactions and livelihood development.",
+    "eligibility": "Eligible street vendors who meet the scheme's vendor identification and documentation requirements, such as a Certificate of Vending or Letter of Recommendation from the appropriate urban authority. Coverage and lending terms follow the restructured scheme guidelines.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "Working-capital loans in successive tranches for eligible vendors, with repayment-linked access to later tranches and applicable incentives for digital transactions. Current tranche amounts and terms should be verified on the official portal.",
+    "documents": [
+      "Certificate of Vending or Letter of Recommendation, where applicable",
+      "Identity and bank details",
+      "Vendor and local-body verification details"
+    ],
+    "how_to_apply": "Apply through the official PM SVANidhi portal or with help from the urban local body, designated lending institution or authorized facilitation centre.",
+    "contact": "https://pmsvanidhi.mohua.gov.in/",
+    "source_url": "https://pmsvanidhi.mohua.gov.in/",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "pm-fasal-bima-yojana",
+    "name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+    "organization": "Ministry of Agriculture and Farmers Welfare",
+    "category": "agriculture",
+    "audience": "farmer",
+    "description": "Low-cost crop insurance that pays farmers when notified crops are damaged by drought, flood, storm, hail, pests, disease or other natural causes, from before sowing to after harvest.",
+    "eligibility": "All farmers, including tenant farmers and sharecroppers, growing notified crops in notified areas. Joining is voluntary, including for farmers with a crop loan or Kisan Credit Card. Loan farmers who do not want it must say so at the bank at least 7 days before the last date. Not every state runs this scheme.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "The farmer pays at most 2% of the insured amount for Kharif food and oilseed crops, 1.5% for Rabi food and oilseed crops, and 5% for commercial and horticultural crops. The government pays the rest of the premium.",
+    "documents": [
+      "Aadhaar card",
+      "Bank passbook",
+      "Land records (RoR or land possession certificate), or tenancy agreement for tenant farmers and sharecroppers",
+      "Declaration of crop sown or to be sown",
+      "Passport-size photo"
+    ],
+    "how_to_apply": "Apply before your state's last date for the season (usually 31 July for Kharif and 31 December for Rabi) on pmfby.gov.in, at your bank, a Common Service Centre or the insurance company office. For hail, landslide, flooding of a field or harvested crop damage, tell the insurance company within 72 hours through the Crop Insurance App, bank or toll-free number.",
+    "contact": "Krishi Rakshak Portal Helpline: 14447; https://pmfby.gov.in/",
+    "source_url": "https://pmfby.gov.in/pdf/Revamped%20Operational%20Guidelines_17th%20August%202020.pdf",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "pradhan-mantri-kisan-maandhan",
+    "name": "Pradhan Mantri Kisan Maandhan Yojana (PM-KMY)",
+    "organization": "Department of Agriculture and Farmers Welfare",
+    "category": "pension",
+    "audience": "farmer",
+    "description": "Voluntary contributory pension scheme for eligible small and marginal farmers to provide old-age income security.",
+    "eligibility": "Small and marginal farmers with cultivable landholding up to 2 hectares, generally aged 18 to 40 at entry and meeting land-record and exclusion conditions. Some categories of higher-income or other social-security beneficiaries are excluded.",
+    "min_age": 18,
+    "max_age": 40,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "Minimum assured pension of ₹3,000 per month after age 60 for eligible subscribers; government matching contribution and spouse pension provisions apply under scheme rules.",
+    "documents": [
+      "Aadhaar",
+      "Savings bank or PM-KISAN account details",
+      "Landholding details"
+    ],
+    "how_to_apply": "Enroll through a designated Common Service Centre after checking current eligibility and contribution requirements.",
+    "contact": "https://www.myscheme.gov.in/schemes/pmkmdy",
+    "source_url": "https://www.myscheme.gov.in/schemes/pmkmdy",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "pradhan-mantri-mudra-yojana",
+    "name": "Pradhan Mantri Mudra Yojana (PMMY)",
+    "organization": "Department of Financial Services, Ministry of Finance",
+    "category": "employment",
+    "audience": "adult",
+    "description": "Business loans up to ₹20 lakh, given by banks and other lenders, for small non-farm businesses such as shops, vendors, repair shops, artisans, food units and transport.",
+    "eligibility": "Any Indian citizen with a plan for an income-earning business in manufacturing, trading or services, including dairy, poultry and beekeeping. Individuals, shop owners and partnership firms can apply. You should not be a loan defaulter. This is a loan that must be repaid; there is no subsidy.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "Shishu: up to ₹50,000. Kishor: above ₹50,000 up to ₹5 lakh. Tarun: above ₹5 lakh up to ₹10 lakh. Tarun Plus: up to ₹20 lakh for those who fully repaid a Tarun loan. The lender sets the interest rate. Banks are told not to ask for collateral for these small business loans.",
+    "documents": [
+      "Identity proof: Aadhaar, voter ID, PAN, driving licence or passport",
+      "Address proof: recent electricity or phone bill, Aadhaar or voter ID",
+      "Two recent colour photos",
+      "Quotation of machinery or items to buy",
+      "Business licence or registration, if any",
+      "For loans of ₹2 lakh and above: balance sheets and tax returns as asked by the lender"
+    ],
+    "how_to_apply": "Go to any bank, regional rural bank, small finance bank, NBFC or microfinance branch and ask for a MUDRA loan, or apply online at udyamimitra.in. Shishu has a one-page form. MUDRA does not use agents; do not pay any middleman.",
+    "contact": "https://www.mudra.org.in/",
+    "source_url": "https://www.mudra.org.in/",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "prime-ministers-employment-generation-programme",
+    "name": "Prime Minister's Employment Generation Programme (PMEGP)",
+    "organization": "Ministry of Micro, Small and Medium Enterprises; implemented through KVIC and designated agencies",
+    "category": "employment",
+    "audience": "adult",
+    "description": "Credit-linked subsidy programme to support establishment of eligible new micro-enterprises and generate self-employment.",
+    "eligibility": "Eligible individuals and other permitted entities proposing a new micro-enterprise, subject to age, education, project-cost, activity and other current PMEGP guidelines. Existing units and restricted activities may not qualify.",
+    "min_age": 18,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "Bank-linked project finance with a government margin-money subsidy for eligible projects; subsidy rates and maximum project costs vary by applicant category, location and current guidelines.",
+    "documents": [
+      "Identity and address proof",
+      "Project report",
+      "Education proof where applicable",
+      "Category certificate where applicable",
+      "Bank and other documents required by the implementing agency"
+    ],
+    "how_to_apply": "Submit an application through the official KVIC PMEGP e-portal and follow the prescribed bank and implementing-agency process.",
+    "contact": "https://www.kviconline.gov.in/pmegpeportal/",
+    "source_url": "https://www.kviconline.gov.in/pmegpeportal/pmegphome/index.jsp",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "day-nrlm",
+    "name": "Deendayal Antyodaya Yojana–National Rural Livelihoods Mission (DAY-NRLM)",
+    "organization": "Ministry of Rural Development",
+    "category": "employment",
+    "audience": "household",
+    "description": "A government mission that brings poor rural women together into Self Help Groups (SHGs). The groups save money, get bank loans, and get help to start or grow farm and non-farm work. It runs in all states and union territories except Delhi and Chandigarh.",
+    "eligibility": "Women from poor rural households. The aim is to bring at least one woman from every poor rural household into a Self Help Group.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "Each SHG can get a Revolving Fund of Rs 20,000 to Rs 30,000 and a Community Investment Fund of up to Rs 2.5 lakh. Women SHGs can get bank loans up to Rs 3 lakh at 7 percent interest a year. Members also get training, banking help through Bank Sakhis, and support to start small businesses.",
+    "documents": [
+      "Identity and household details as requested by the local self-help group or state mission"
+    ],
+    "how_to_apply": "Join a Self Help Group in your village. Ask the SHG leader, the village organisation, or the Block office of your State Rural Livelihoods Mission to help you join or form a group.",
+    "contact": "Block office of your State Rural Livelihoods Mission, or your village SHG or village organisation.",
+    "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2146872",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "janani-suraksha-yojana",
+    "name": "Janani Suraksha Yojana (JSY)",
+    "organization": "National Health Mission, Ministry of Health and Family Welfare",
+    "category": "healthcare",
+    "audience": "mother_child",
+    "description": "Cash help for pregnant women who give birth in a government hospital. It is part of the National Health Mission. The ASHA worker helps the mother.",
+    "eligibility": "In Uttar Pradesh, Uttarakhand, Bihar, Jharkhand, Madhya Pradesh, Chhattisgarh, Assam, Rajasthan, Odisha, Jammu and Kashmir and Ladakh: all pregnant women who deliver in a government hospital. In all other states: only BPL, SC or ST women. BPL, SC and ST women can also deliver in an approved private hospital. Cash for home delivery is only for BPL women.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "In the 11 states and UTs listed: Rs 1,400 in villages and Rs 1,000 in cities. In all other states: Rs 700 in villages and Rs 600 in cities. BPL women who deliver at home get Rs 500, whatever their age or number of children.",
+    "documents": [
+      "JSY card",
+      "Mother and Child Protection (MCP) card",
+      "BPL card or SC/ST certificate (needed outside the 11 states and UTs listed)"
+    ],
+    "how_to_apply": "Register your pregnancy early with your ASHA worker, ANM or nearest government health centre. You will get a JSY card and a Mother and Child Protection card. Plan to deliver in a government hospital to get the money.",
+    "contact": "Your ASHA worker, ANM or nearest government health centre.",
+    "source_url": "https://nhm.gov.in/index1.php?lang=1&level=3&lid=309&sublinkid=841",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "janani-shishu-suraksha-karyakram",
+    "name": "Janani-Shishu Suraksha Karyakram (JSSK)",
+    "organization": "National Health Mission, Ministry of Health and Family Welfare",
+    "category": "healthcare",
+    "audience": "mother_child",
+    "description": "Free delivery and free treatment for pregnant women in government hospitals, and free treatment for sick babies up to 1 year old. You should not have to pay anything.",
+    "eligibility": "All pregnant women who go to a government hospital or health centre, including for problems before or after delivery. All sick newborns and babies up to 1 year old treated in government hospitals. There is no income limit.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "Free normal delivery and free caesarean operation. Free medicines, tests and blood if needed. Free food for 3 days after normal delivery and 7 days after caesarean. Free transport from home to hospital, between hospitals if referred, and back home. Sick babies get the same free care.",
+    "documents": [
+      "Mother and Child Protection (MCP) card, if you have one"
+    ],
+    "how_to_apply": "No application is needed. Go to a government hospital or health centre. For free transport, call 102 or 108. If anyone asks you to pay, you can complain on helpline 104.",
+    "contact": "Ambulance: 102 or 108. Health helpline: 104. Or your ASHA worker or ANM.",
+    "source_url": "https://nhm.gov.in/index1.php?lang=1&level=3&sublinkid=842&lid=308",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "surakshit-matritva-aashwasan-suman",
+    "name": "Surakshit Matritva Aashwasan (SUMAN)",
+    "organization": "Ministry of Health and Family Welfare / National Health Mission",
+    "category": "healthcare",
+    "audience": "mother_child",
+    "description": "A government promise of free, respectful care for every pregnant woman, new mother and newborn at government health facilities. No one should be refused service. It brings together JSY, JSSK and other mother and baby schemes.",
+    "eligibility": "All pregnant women, all mothers up to 6 months after delivery, and all sick newborns and infants, at government health facilities. There is no income limit.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "Free: at least 4 pregnancy check-ups, delivery including caesarean, care for complications, and care after delivery. Free ambulance from home (call 102 or 108) and drop back home. Birth-dose vaccines for the baby. 6 home visits to check the newborn. Free care for sick babies. Free check-up on the 9th of every month under PMSMA.",
+    "documents": [
+      "Mother and Child Protection (MCP) card, if you have one"
+    ],
+    "how_to_apply": "No application is needed. Go to any government health facility, or ask your ASHA worker or ANM. If you are refused service or asked to pay, call 104 to complain.",
+    "contact": "Ambulance: 102 or 108. Complaints: 104. Or your ASHA worker or ANM.",
+    "source_url": "https://www.nhm.gov.in/images/pdf/maternal-health/iec/Print-material/Suman_Brochure.pdf",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "mission-vatsalya",
+    "name": "Mission Vatsalya",
+    "organization": "Ministry of Women and Child Development",
+    "category": "women_child_welfare",
+    "audience": "child",
+    "description": "Government care and protection for children who have no safe home or are in danger, and for children in trouble with the law. Help is given through the District Child Protection Unit and the Child Welfare Committee.",
+    "eligibility": "Children under 18 who need care and protection: orphans, abandoned or missing children, children living on the street or begging, child workers, victims of child marriage, trafficking or abuse, and children with disabilities. Also children whose mother is a widow or divorced, or whose parents are very ill. Youths leaving a children's home at 18 can get after-care.",
+    "min_age": null,
+    "max_age": 23,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "Rs 4,000 a month per child for sponsorship (child stays with family or relatives), foster care, or after-care from age 18 to 21, which can be extended to 23. For sponsorship to keep a child at home, family income must be under Rs 72,000 a year in villages or Rs 96,000 elsewhere. Also children's homes, open shelters and adoption.",
+    "documents": [
+      "Documents depend on the child's circumstances and the service requested; do not delay emergency protection while gathering paperwork."
+    ],
+    "how_to_apply": "Call Child Helpline 1098, or 112 in an emergency. Or contact the District Child Protection Unit or Child Welfare Committee in your district. For sponsorship, the Gram Panchayat or ward office can also refer the family.",
+    "contact": "Child Helpline: 1098. Emergency: 112. District Child Protection Unit or Child Welfare Committee.",
+    "source_url": "https://wcd.gov.in/documents/uploaded/1714390625_pDwvtjA0sD.pdf",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "saksham-anganwadi-poshan-2",
+    "name": "Mission Saksham Anganwadi and POSHAN 2.0",
+    "organization": "Ministry of Women and Child Development",
+    "category": "food",
+    "audience": "mother_child",
+    "description": "Free food, preschool and health services for young children, pregnant women and new mothers through Anganwadi Centres. Extra food is given to children who are very weak.",
+    "eligibility": "Children up to 6 years, pregnant women and breastfeeding mothers. Girls aged 14 to 18 in Aspirational Districts and North Eastern states. Open to all, whatever your caste, religion or income. You only need to register at your nearest Anganwadi Centre.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "Six free services: extra food, preschool for children aged 3 to 6, nutrition and health advice, vaccination, health check-ups and referral to hospital. Children 6 months to 3 years and pregnant and breastfeeding women get take-home ration twice a month, usually on the 1st and 15th. Children at the centre get a morning snack and a hot cooked meal.",
+    "documents": [
+      "Aadhaar card (a child can use the mother's Aadhaar)"
+    ],
+    "how_to_apply": "Go to your nearest Anganwadi Centre and register with the Anganwadi worker using Aadhaar. A child can be registered using the mother's Aadhaar. If you have no Aadhaar, the Anganwadi worker should help you get one. Your face may be checked on the Poshan Tracker app when you collect food.",
+    "contact": "Your nearest Anganwadi Centre or Anganwadi worker.",
+    "source_url": "https://www.wcd.gov.in/images/uploaded/1706599962_GW1l1U0D10.pdf",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "pm-yasasvi-top-class-college-obc-ebc-dnt",
+    "name": "PM-YASASVI: Top Class College Education for OBC, EBC and DNT Students",
+    "organization": "Department of Social Justice and Empowerment, Ministry of Social Justice and Empowerment",
+    "category": "education",
+    "level": "college",
+    "description": "Full scholarship from the central government for OBC, EBC and DNT students who get admission in top colleges on the scheme list after Class 12. The list can include IITs, IIMs, AIIMS, NITs, National Law Universities and other top institutions.",
+    "eligibility": "OBC, EBC or DNT student admitted to a full-time course after Class 12 in an institution notified under this scheme. Family income from all sources up to ₹2.5 lakh a year. Each college has a fixed number of seats (slots), given by merit; 30% are kept for girls. Not more than 2 children from one family can get it.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "Full tuition fee and non-refundable charges (up to ₹2 lakh a year at private institutions, ₹3.72 lakh a year at private flying clubs for pilot training). Living expenses of ₹3,000 per month. Books and stationery ₹5,000 per year. One-time ₹45,000 for a computer or laptop. Fees go to the college; the rest goes to the student by bank transfer.",
+    "documents": [
+      "Aadhaar card",
+      "Passport size photograph",
+      "Caste or community certificate from the competent authority",
+      "Valid income certificate from the competent authority",
+      "Domicile certificate",
+      "Marksheets and certificates",
+      "Admission rank proof",
+      "Proof of fee details",
+      "Disability certificate, if applicable",
+      "Bank account details"
+    ],
+    "how_to_apply": "Apply on the National Scholarship Portal (scholarships.gov.in). Register as a new applicant, log in, choose this scholarship, fill the form and upload documents. The college selects students by entrance exam merit and verifies the form. You must apply again every year to renew. The scholarship stops if you are not promoted to the next year.",
+    "contact": "https://scholarships.gov.in/",
+    "source_url": "https://scholarships.gov.in/public/schemeGuidelines/ApprovedmodifieddraftofTopClassCollege.pdf",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "pm-yasasvi-pre-matric-obc-ebc-dnt",
+    "name": "PM-YASASVI: Pre-Matric Scholarship for OBC, EBC and DNT Students",
+    "organization": "Department of Social Justice and Empowerment, Ministry of Social Justice and Empowerment",
+    "category": "education",
+    "level": "school",
+    "description": "Central scholarship for OBC, EBC and DNT students in Class 9 and Class 10 in government schools. The money is paid by the state or union territory government straight into the bank account of the student or parent.",
+    "eligibility": "OBC, EBC or DNT student with a valid caste certificate. Must study full time in Class 9 or 10 in a government school. Family income from all sources must not be more than ₹2,50,000 a year. Needs at least 75% attendance in the previous year. Only two boys per family can get it; there is no limit for girls.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "₹4,000 per year as an academic allowance, paid by bank transfer (DBT). It can be renewed each year until the student passes Class 10, if attendance stays at 75% or more. A student cannot also take another scholarship for Class 9 or 10.",
+    "documents": [
+      "Aadhaar card",
+      "Passport size photograph",
+      "Caste or community certificate from the competent authority",
+      "Income certificate",
+      "Domicile certificate",
+      "School marksheets or certificates",
+      "Disability certificate, if applicable",
+      "Bank account details"
+    ],
+    "how_to_apply": "Apply online only, no paper forms. Use your state scholarship portal or the National Scholarship Portal (scholarships.gov.in). Register as a new applicant, log in, choose the scholarship, fill the form and upload documents. The portal usually opens on 1 April and closes on 30 June. Steps can differ by state.",
+    "contact": "https://scholarships.gov.in/",
+    "source_url": "https://socialjustice.gov.in/public/ckeditor/upload/65661651839791.pdf",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "aicte-swanath-scholarship",
+    "name": "AICTE-Swanath Scholarship Scheme",
+    "organization": "All India Council for Technical Education, Ministry of Education",
+    "category": "education",
+    "level": "college",
+    "description": "AICTE scholarship for students in AICTE-approved degree or diploma courses who are orphans, lost a parent to Covid-19, are children of armed forces or central paramilitary personnel martyred in action, or whose parent has a life-threatening disease or died or became severely disabled in an accident.",
+    "eligibility": "Must belong to one of the groups above. Family income from all sources not more than ₹8 lakh a year. Must be studying in 1st to 4th year of an AICTE-approved degree or diploma course in regular mode. Chosen by Class 12 marks (degree) or Class 10 marks (diploma). 2,000 awards a year: 1,000 degree, 1,000 diploma.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "₹50,000 per year, paid by bank transfer, for college fees, computer, books, equipment and software. Up to 4 years for degree and 3 years for diploma, counted from first year. No extra money for hostel or medical costs. Since August 2026, it can be taken together with one merit scholarship such as AICTE Pragati.",
+    "documents": [
+      "Aadhaar card and Aadhaar-linked bank account in the student's name",
+      "Death certificate of parent(s), or for orphans a Tehsildar/SDM certificate in the given format",
+      "Covid-19 death certificate, or Shaheed certificate from the armed or paramilitary force, as applicable",
+      "Current year family income certificate showing income below ₹8 lakh",
+      "Bonafide certificate from the institution",
+      "Class 10 marksheet, and Class 12 marksheet for degree students",
+      "Category certificate (SC/ST/OBC-NCL), if applicable"
+    ],
+    "how_to_apply": "Apply online on the National Scholarship Portal (scholarships.gov.in). Register, log in with the OTP, fill the form, upload documents and submit. Your college checks the form first, then the state technical education department. For 2026-27, the last date to apply is 31 October 2026. Renew each year with a promotion certificate.",
+    "contact": "AICTE helpline 011-29581118, consultant2stdc@aicte-india.org. Portal help: helpdesk@nsp.gov.in",
+    "source_url": "https://scholarships.gov.in/public/schemeGuidelines/AICTE/AICTE_3039_G.pdf",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "aicte-pragati-scholarship-degree",
+    "name": "AICTE Pragati Scholarship Scheme for Girl Students (Technical Degree)",
+    "organization": "All India Council for Technical Education, Ministry of Education",
+    "category": "education",
+    "level": "college",
+    "description": "AICTE scholarship for girl students who join the first year of an AICTE-approved technical degree course, or the second year through lateral entry.",
+    "eligibility": "Girl student in first year of an AICTE-approved degree course, or second year by lateral entry. Family income from all sources not more than ₹8 lakh a year. At most two girls per family. Gap between passing the qualifying exam and admission must not be more than two years. Selection is by Class 12 marks.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "₹50,000 per year, paid by bank transfer, for college fees, computer, books, equipment and software. Up to 4 years for first-year students and 3 years for lateral entry students. 5,000 degree scholarships each year, plus every eligible girl from the North Eastern states, Jammu and Kashmir, Ladakh, Andaman and Nicobar, Lakshadweep and Dadra and Nagar Haveli and Daman and Diu.",
+    "documents": [
+      "Aadhaar card and Aadhaar-linked bank account in the student's name",
+      "Class 10 certificate and marksheet",
+      "Class 12 certificate and marksheet, or diploma certificate for lateral entry",
+      "Annual family income certificate issued by the State/UT government",
+      "Study or bonafide certificate from the institution",
+      "Parent's declaration",
+      "Category certificate, if applicable"
+    ],
+    "how_to_apply": "Apply online on the National Scholarship Portal (scholarships.gov.in). Register, log in with the OTP, fill the form, upload documents and submit. Your college and the state technical education department will verify it. For 2026-27, the last date to apply is 31 October 2026. Renew each year with your marksheet.",
+    "contact": "AICTE helpline 011-29581118, pragati@aicte-india.org. Portal help: helpdesk@nsp.gov.in",
+    "source_url": "https://www.aicte.gov.in/sites/default/files/stdc/Pragati/AICTE%20Pragati%20Scheme%20Guidelines_Degree.pdf",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "aicte-saksham-scholarship-degree",
+    "name": "AICTE Saksham Scholarship Scheme for Specially Abled Students (Technical Degree)",
+    "organization": "All India Council for Technical Education, Ministry of Education",
+    "category": "disability",
+    "level": "college",
+    "description": "AICTE scholarship for students with disabilities who join the first year of an AICTE-approved technical degree course, or the second year through lateral entry.",
+    "eligibility": "Student with 40% or more disability, admitted to first year of an AICTE-approved degree course, or second year by lateral entry. Family income from all sources not more than ₹8 lakh a year. Gap between passing the qualifying exam and admission must not be more than two years. There is no fixed number of seats: every eligible student gets it.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "₹50,000 per year, paid by bank transfer, for college fees, computer, books, equipment and software. Up to 4 years for first-year students and 3 years for lateral entry students. No extra money for hostel or medical costs. Since August 2026, it can be taken together with one merit scholarship such as AICTE Pragati.",
+    "documents": [
+      "Aadhaar card and Aadhaar-linked bank account in the student's name",
+      "Disability certificate from the competent authority",
+      "Class 10 certificate and marksheet",
+      "Class 12 certificate and marksheet, or diploma certificate for lateral entry",
+      "Annual family income certificate",
+      "Study or bonafide certificate from the institution",
+      "Category certificate, if applicable"
+    ],
+    "how_to_apply": "Apply online on the National Scholarship Portal (scholarships.gov.in). Register, log in with the OTP, fill the form, upload documents and submit. Your college and the state technical education department will verify it. For 2026-27, the last date to apply is 31 October 2026. Renew each year with your marksheet and a letter from the college head.",
+    "contact": "AICTE helpline 011-29581118, saksham@aicte-india.org. Portal help: helpdesk@nsp.gov.in",
+    "source_url": "https://www.aicte-india.org/sites/default/files/stdc/AICTE%20Saksham%20Scheme%20Guidelines_Degree.pdf",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "national-family-benefit-scheme",
+    "name": "National Family Benefit Scheme (NFBS)",
+    "organization": "Ministry of Rural Development",
+    "category": "financial_assistance",
+    "audience": "household",
+    "description": "One-time financial assistance for an eligible poor household after the death of its primary breadwinner.",
+    "eligibility": "The household must meet the applicable Below Poverty Line criteria, and the deceased primary breadwinner must have been older than 18 and younger than 60. The surviving household member recognized as the succeeding breadwinner is assessed under state procedures.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "One-time lump-sum assistance of ₹20,000 under the scheme guidelines surfaced on the official scheme portal; confirm current state implementation and any revised rules before advising applicants.",
+    "documents": [
+      "Death certificate",
+      "Identity and address proof",
+      "BPL/ration card or family ID",
+      "Age proof",
+      "Bank or post-office account details"
+    ],
+    "how_to_apply": "Submit the application through the designated state authority, commonly the Tehsil or District Social Welfare Officer, following the local process.",
+    "contact": "https://nsap.nic.in/",
+    "source_url": "https://www.myscheme.gov.in/schemes/nfbs",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "indira-gandhi-national-disability-pension",
+    "name": "Indira Gandhi National Disability Pension Scheme (IGNDPS)",
+    "organization": "Ministry of Rural Development",
+    "category": "disability",
+    "audience": "adult",
+    "description": "Monthly central government pension under the National Social Assistance Programme for very poor (BPL) people aged 18 or above with severe or multiple disabilities.",
+    "eligibility": "Age 18 years or above. Disability of 80% or more, or multiple disabilities. Dwarfs are also eligible. Must belong to a Below Poverty Line (BPL) household and live in India.",
+    "min_age": 18,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "Central share is ₹300 per month for ages 18 to 79, and ₹500 per month from age 80. Paid into a bank or post office account by DBT. States add their own top-up of ₹50 to ₹5,700 a month, so the total amount differs by state.",
+    "documents": [
+      "BPL card",
+      "Aadhaar card",
+      "Disability certificate showing 80% or more, from the Chief Medical Officer, CHC or PHC",
+      "Age proof: birth or school certificate, or ration card or voter ID",
+      "Passport size photographs",
+      "Bank or post office account details"
+    ],
+    "how_to_apply": "Give the filled form at the Gram Panchayat or Block office in villages, or the Municipality in towns. An officer verifies it, the Gram Sabha or Ward Sabha reviews the list, and a sanction order and pension passbook are given. You can also apply online on the UMANG app by searching for NSAP.",
+    "contact": "https://nsap.nic.in/",
+    "source_url": "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2025/nov/doc2025117686801.pdf",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "national-apprenticeship-promotion-scheme",
+    "name": "National Apprenticeship Promotion Scheme (NAPS)",
+    "organization": "Ministry of Skill Development and Entrepreneurship",
+    "category": "employment",
+    "audience": "adult",
+    "description": "Central scheme that helps young people do paid on-the-job training (apprenticeship) in companies under the Apprentices Act, 1961. The government pays part of the apprentice's monthly stipend directly into the apprentice's bank account.",
+    "eligibility": "Minimum age 14 years, or 18 years for trades in hazardous industries. To get the government share of the stipend, you must be 35 years or younger when you register. You must link Aadhaar and complete e-KYC on the apprenticeship portal. No government stipend share is paid for apprenticeships in government departments, PSUs or public sector banks.",
+    "min_age": 14,
+    "max_age": 35,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "The company pays a monthly stipend. The government adds 25% of the stipend, up to ₹1,500 per month, directly to your bank account by DBT. Training lasts 6 to 12 months in optional trades, about 1 year for ITI pass-outs and 2 years for freshers in designated trades. You get a government certificate when you finish.",
+    "documents": [
+      "Aadhaar card",
+      "Educational certificates needed for the chosen trade",
+      "Aadhaar-seeded bank account details"
+    ],
+    "how_to_apply": "Go to apprenticeshipindia.gov.in and register as a candidate with your mobile number and email. Complete Aadhaar e-KYC and mobile OTP check. Then search and apply for apprenticeships. You can also attend a Pradhan Mantri National Apprenticeship Mela.",
+    "contact": "https://www.apprenticeshipindia.gov.in/",
+    "source_url": "https://naps-cdn.s3.ap-south-1.amazonaws.com/NAPS+2.0_Guidelines_25-08-2023.pdf",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "up-gambhir-bimari-sahayata-yojana",
+    "name": "Uttar Pradesh Gambhir Bimari Sahayata Yojana",
+    "organization": "Uttar Pradesh Building and Other Construction Workers Welfare Board / Government of Uttar Pradesh",
+    "category": "healthcare",
+    "audience": "household",
+    "description": "Uttar Pradesh Building and Other Construction Workers Welfare Board scheme that pays for treatment of serious illness for registered construction workers and their families who are not covered by Ayushman Bharat PM-JAY or the Mukhyamantri Jan Arogya Yojana.",
+    "eligibility": "Construction worker registered with the UP Building and Other Construction Workers Welfare Board, with registration up to date (renewed). Must not be eligible for Ayushman Bharat PM-JAY or Mukhyamantri Jan Arogya Yojana. Covers the worker, husband or wife, unmarried daughters, and sons under 21 years.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "Uttar Pradesh"
+    ],
+    "benefits": "Full repayment of treatment cost, equal to the Ayushman Bharat rate, at government or autonomous hospitals or hospitals empanelled with SACHIS. If the hospital gives an estimate, money can be paid to the hospital in advance. There is no fixed upper limit.",
+    "documents": [
+      "Proof of up-to-date construction worker registration",
+      "Aadhaar card",
+      "Bank passbook copy",
+      "Records of the illness",
+      "Doctor's certificate in the prescribed format",
+      "Original bills of medicines bought",
+      "Dependency certificate for an unmarried daughter or a son under 21"
+    ],
+    "how_to_apply": "Apply through the Board's online scheme application at labour.upbocw.in, or get help at your district labour office. Keep your worker registration renewed. Call the toll-free helpline 1800-180-5412 for help.",
+    "contact": "UPBOCW toll-free 1800-180-5412, https://upbocw.in/",
+    "source_url": "https://upbocw.in/en/schemes",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "self-employment-rehabilitation-manual-scavengers",
+    "name": "NAMASTE (formerly Self-Employment Scheme for Rehabilitation of Manual Scavengers)",
+    "organization": "Ministry of Social Justice and Empowerment",
+    "category": "employment",
+    "audience": "adult",
+    "description": "This scheme (SRMS) has been replaced. From 2023-24 it is part of the NAMASTE scheme of the Ministry of Social Justice and Empowerment. Skill training, capital subsidy for self-employment projects and Ayushman Bharat health insurance for identified manual scavengers continue under NAMASTE.",
+    "eligibility": "Manual scavengers identified in state government surveys, and their dependants aged 18 or above (spouse or children who are not employed). Sanitation workers and sewer and septic tank workers and their dependants can get help only for sanitation-related projects.",
+    "min_age": null,
+    "max_age": null,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "Free skill training with ₹3,000 a month stipend. Subsidy on self-employment projects up to ₹15 lakh: 50% of cost up to ₹5 lakh, then ₹2.5 lakh plus 25% of the rest, maximum ₹5 lakh. Group projects up to ₹50 lakh, subsidy up to ₹3.75 lakh per member. Loan repayment in 5 years (7 years above ₹5 lakh). Ayushman Bharat health cover.",
+    "documents": [
+      "Aadhaar card",
+      "Proof of identity, address and age",
+      "Manual scavenger ID or survey receipt number, or an occupation certificate for sanitation workers",
+      "Passport size photograph",
+      "Bank account details"
+    ],
+    "how_to_apply": "Skill training for manual scavengers is given by NSKFDC through the PM-DAKSH portal. For a self-employment loan with subsidy, apply through NSKFDC's state channelising agency, a regional rural bank or a nationalised bank branch. Identification of manual scavengers is done by the state government through urban local bodies or gram panchayats.",
+    "contact": "Department of Social Justice and Empowerment toll-free 1800-202-1989, https://socialjustice.gov.in/schemes/37",
+    "source_url": "https://socialjustice.gov.in/public/ckeditor/upload/66671696827061.pdf",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "sukanya-samriddhi-account",
+    "name": "Sukanya Samriddhi Account Scheme",
+    "organization": "Department of Economic Affairs, Ministry of Finance; administered through authorized banks and post offices",
+    "category": "financial_assistance",
+    "audience": "child",
+    "description": "A savings account for a girl child with a high, tax-free interest rate, to save for her education and marriage.",
+    "eligibility": "A parent or guardian can open it for a girl who is below 10 years old. One account per girl. Maximum two girls per family; more allowed only for twins or triplets.",
+    "min_age": null,
+    "max_age": 9,
+    "locations": [
+      "All India"
+    ],
+    "benefits": "Interest was 8.2% a year up to 30 September 2026; the government can change it. Deposits get tax deduction under Section 80C and the interest is tax-free. Up to 50% can be taken out for her education after she turns 18 or passes Class 10. The account matures after 21 years, or can be closed for her marriage after 18.",
+    "documents": [
+      "Girl child's birth certificate",
+      "Parent or guardian's identity and address proof",
+      "Filled account opening form",
+      "First deposit of at least ₹250"
+    ],
+    "how_to_apply": "Go to a post office or authorised bank. Fill the account opening form with the girl's birth certificate. Deposit at least ₹250 and at most ₹1.5 lakh each financial year, for 15 years. If you miss a year, you can restart by paying ₹250 plus a ₹50 penalty for each missed year.",
+    "contact": "https://www.indiapost.gov.in/",
+    "source_url": "https://www.nsiindia.gov.in/InternalPage.aspx?Id_Pk=89",
+    "last_checked": "2026-10-11"
   }
 ]

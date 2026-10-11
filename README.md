@@ -151,7 +151,12 @@ To add a program, append an object with the same fields and restart the agent. T
 is rebuilt from the file at startup. Only add information from an official source, and
 always include `source_url`.
 
-Education programs can also have `"level": "school"` or `"college"`.
+Education programs can also have `"level": "school"` or `"college"`, which the search uses
+as a filter. `audience` (for example `farmer` or `household`) is descriptive only.
+
+Categories: `education`, `healthcare`, `financial_assistance`, `employment`, `disability`,
+`women_child_welfare`, `food`, `agriculture`, `housing`, `insurance`, `pension`. A new
+category must also be added to `Category` in `agent.py` so the agent can search it.
 
 Search applies the `category`, `location`, age and level filters first, then ranks by
 similarity.
