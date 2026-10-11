@@ -245,15 +245,16 @@ Small local models are slow on a laptop CPU (about two minutes per reply) and we
 the production model, especially in Hindi. Use them to catch broken behaviour, and report
 scores from `gpt-oss-120b`.
 
-### Retrieval baseline
+### Retrieval scores
 
-With the agent's filters, over the 99 retrieval cases:
+Searching the way the agent does (age and level filters, category only used to rank):
 
-| Recall@3 | Precision@3 | Precision@1 | MRR | nDCG@3 |
-| --- | --- | --- | --- | --- |
-| 0.909 | 0.598 | 0.828 | 0.891 | 0.869 |
+| Split | Recall@3 | Precision@3 | Top-1 | MRR | nDCG@3 | No-match given results |
+| --- | --- | --- | --- | --- | --- | --- |
+| Dev (75 cases) | 0.896 | 0.530 | 0.821 | 0.881 | 0.855 | 8 / 8 |
+| Test (36 cases) | 0.891 | 0.573 | 0.844 | 0.901 | 0.872 | 4 / 4 |
 
-English scores higher than Hindi (MRR 0.917 vs 0.838). The relative cutoff was chosen on
+English scores higher than Hindi (dev MRR 0.922 vs 0.795). The relative cutoff was chosen on
 the whole dataset before the split existed, so these numbers are slightly optimistic.
 
 ### Evaluation results (October 2026)
@@ -291,37 +292,26 @@ What the scores show:
 The checks score one reply at a time, so an unnecessary question counts as a full failure
 even though the person can simply answer it.
 
-**After the prompt fixes** (99 dev cases, Ollama Cloud `gpt-oss:120b`):
+**After the fixes** (Ollama Cloud `gpt-oss:120b`, same cases before and after):
 
-| | Before | After |
-| --- | --- | --- |
-| Passed every check | 40% | 84% |
-| Right tool | 59% | 95% |
-| Followed the safety rule | 85% | 97% |
-| Asked a question instead of searching | 37 cases | 3 |
-| Told to call 112 for a non-emergency | 3 | 0 |
-| Serious failures | 5 | 3 |
+| | Dev before | Dev after | Test before | Test after |
+| --- | --- | --- | --- | --- |
+| Passed every check | 40% | 81% | 33% | 73% |
+| Right tool | 59% | 95% | 62% | 96% |
+| Followed the safety rule | 85% | 94% | 80% | 96% |
+| Grounded | 100% | 99% | 98% | 100% |
+| Replied in the right language | 100% | 100% | 100% | 100% |
+| Asked a question instead of searching | 37 | 3 | 15 | 2 |
+| Said "nothing found" when a scheme exists | 2 | 3 | 3 | 0 |
+| Serious failures | 5 | 3 | 3 | 2 |
 
-These are dev-set numbers, measured on the cases used for tuning, so they are optimistic.
+Dev has 99 cases and test 45. The prompt was tuned on dev only; test was used just to check.
+On Groq the test set gave 40% before and 69% after an earlier round of fixes, so the two
+providers score similarly.
 
-**Final check on the held-out test set** (45 cases, Groq `gpt-oss-120b`, same cases before
-and after the fixes):
-
-| | Before | After |
-| --- | --- | --- |
-| Passed every check | 40% | 69% |
-| Right tool | 62% | 96% |
-| Followed the safety rule | 91% | 93% |
-| Grounded | 100% | 98% |
-| Replied in the right language | 100% | 100% |
-| Asked a question instead of searching | 17 cases | 2 |
-| Told to call 112 for a non-emergency | 1 | 0 |
-| Said "nothing found" when a scheme exists | 3 | 4 |
-| Serious failures (checked by hand) | 1 | 2 |
-
-The test set improved less than dev (69% vs 84%), as expected for cases not used in tuning.
-Both remaining serious failures are questions with no right answer (an MBA abroad, wedding
-costs) where the agent offered an unrelated scheme that the search returned.
+The remaining serious failures are all one pattern: for a question with no right answer
+(an MBA abroad, wedding costs, a tractor subsidy, an electricity bill) the agent describes
+an unrelated scheme that the search returned, instead of saying nothing was found.
 
 ### Done
 
@@ -341,42 +331,48 @@ costs) where the agent offered an unrelated scheme that the search returned.
 - **112 only for real danger**: medicine and legal questions are referred to a doctor or
   lawyer, and each crisis type gets its own helpline (Tele-MANAS 14416, 181, Childline 1098)
   together with 112.
-- **Search fallback**: if a category-filtered search finds nothing, it searches again
-  without the category (crop insurance is filed under agriculture, not insurance).
+- **Category as a preference**: the model's category guess now only ranks results higher
+  (`RAG_CATEGORY_BONUS`, default 0.05) instead of hiding other categories. The model often
+  guesses differently from ours (crop insurance is filed under agriculture), and with 20%
+  wrong guesses this keeps MRR at 0.866 instead of 0.826. False "nothing found" replies on
+  the test set went from 3 to 0.
+- **Only matching schemes**: the agent offers a scheme only if it pays for or provides the
+  exact thing asked for, and for a sick child or domestic violence it adds the relevant
+  scheme after the helplines.
 - **Tolerant tool arguments**: some providers ignore allowed values, sending "class 8" as a
   level or "scholarship" as a category. The agent now cleans these up instead of failing.
 
 ### Known gaps
 
-- **No-match detection.** Retrieval returns schemes for all 12 no-match questions: their
-  scores (0.39 to 0.58) overlap with correct matches (from 0.43). Saying "nothing found"
-  currently depends on the model judging fit, which the LLM eval needs to confirm.
+- **No-match detection (accepted limitation).** For a question no scheme covers, the agent
+  sometimes describes an unrelated scheme the search returned instead of saying nothing was
+  found: 2 of 45 test cases and 3 of 99 dev cases. This is the only remaining serious
+  failure pattern. Search scores can't separate these questions from real matches (0.39 to
+  0.58 vs from 0.43), and a prompt rule reduced the problem but didn't remove it.
+- **Reranker tested and rejected.** A multilingual cross-encoder
+  (`cross-encoder/mmarco-mMiniLMv2-L12-H384-v1`, quantized) was tried on the dev cases. Its
+  scores for no-match questions overlapped with those for correct schemes, so a cutoff that
+  rejected 7 of 8 no-match questions also emptied 26 of 67 correct answers. It ranked worse
+  than the current search (MRR 0.828 vs 0.881, and 0.644 in Hindi) and added about 0.5 s
+  per search. Larger rerankers were ruled out as too heavy for a laptop.
 - **Crisis questions** retrieve poorly (Recall@3 0.43). This is acceptable because the
   helplines come from the prompt, not from search.
-- **Irrelevant follow-up questions** sometimes happen, such as asking about the daughter's
-  school when the need is wedding costs.
 
 ### Next
 
-1. Stop offering unrelated schemes for questions with no right answer. This is now the
-   main source of serious failures, and the search can't solve it alone (see Known gaps).
-   A reranker would help most; a stricter prompt rule is the cheaper first step.
-2. Remaining issues:
-   - When the model picks a different category from ours (for example "financial
-     assistance" for a tea-shop loan), the right scheme is filtered out and the agent says
-     nothing fits. Using the category as a preference rather than a hard filter would fix
-     this.
-   - A sick baby or a domestic-violence question is sometimes answered with the crisis
-     helplines but no search, so free care or the One Stop Centre isn't mentioned.
-   - Rare but serious: in one Hindi handoff the agent said the request was saved when it
-     wasn't, and in one case it suggested an unrelated scheme for a tractor subsidy.
+1. Smaller issues: the agent sometimes asks for a name before saving a volunteer request,
+   and occasionally answers "nothing found" without searching (passport help, which is
+   correct but skips the search).
+2. If no-match needs further work: have the model mark each search result as fitting or
+   not before replying. Cheap to try on the dev cases, but not guaranteed to help.
 3. Human review of the dataset, with a native speaker for the Hindi cases.
 4. More romanized Hindi and speech-error cases (10 so far).
+5. The eval counts a different category guess as an argument failure. Since the category
+   now only ranks results, this check is stricter than needed; 6 of the 12 remaining test
+   failures are only this.
 
 ### Planned, needs approval (new models or data)
 
-- A reranker model that scores the question and scheme together. It is the most likely fix
-  for no-match detection, but it adds a model download and latency.
 - A stronger multilingual embedding model (for example `multilingual-e5-base` or `bge-m3`)
   for better Hindi retrieval.
 - Schemes from two or three states, so location filtering can be tested.

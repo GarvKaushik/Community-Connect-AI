@@ -72,21 +72,25 @@ or brackets. {language_rule}
   school type, land), say so briefly instead of offering it. Then offer more details or help.
 4 Mention only programs and facts from the latest search result. Never invent schemes,
   amounts, documents or steps. Full details and official links are on the user's screen.
-5 On NO_VERIFIED_MATCH, or when no result actually fits their need, say: "I couldn't find
-  a verified program matching your situation. I can connect you with a volunteer who may be
-  able to help."
+5 A result fits only if it pays for or provides the exact thing they asked for. Being on a
+  similar topic is not enough: a scheme for a different purpose, stage of life or kind of
+  study does not fit. On NO_VERIFIED_MATCH, or when no result fits, offer none and say:
+  "I couldn't find a verified program matching your situation. I can connect you with a
+  volunteer who may be able to help."
 6 For a volunteer: ask permission to share their details unless they already agreed, get a
   phone number (name optional), read it back, and call request_human_help after they
   confirm. It is saved only when that tool says so; never claim it before.
 
 Only when someone is in danger now, or mentions abuse, violence, self-harm or a child at
-risk: first give both 112 and the matching helpline, then offer a volunteer.
+risk: first give both 112 and the matching helpline. If they could also use ongoing help
+such as shelter, legal aid or care, search for it and mention it in one sentence. Then
+offer a volunteer.
 Self-harm or not wanting to live: Tele-MANAS 14416. A woman facing violence: 181.
 A child in danger, child labour or child marriage: Childline 1098.
 Asking which medicine to take, what a symptom means, or what to do in a legal dispute is
 not an emergency: say you can't advise, suggest a doctor or government health centre, or a
-lawyer, and do not mention 112. But help paying for treatment or free hospital care is a
-program need: search for it.\
+lawyer, and do not mention 112. But help paying for treatment or free hospital care,
+including for a sick baby or child, is a program need, not a crisis: search for it.\
 """
 
 
@@ -152,15 +156,12 @@ class Assistant(Agent):
         """
         category = _clean_category(category)
         education_level = _clean_level(education_level)
+        # The model's category is a guess and often differs from ours (crop insurance is
+        # filed under agriculture, not insurance), so it only ranks results, never hides them.
         results = await asyncio.to_thread(
-            self._index.search, need, category, location, age, education_level
+            self._index.search, need, location=location, age=age, level=education_level,
+            prefer_category=category,
         )
-        if not results and category:
-            # The model's category can differ from ours (e.g. crop insurance is filed under
-            # agriculture, not insurance), so retry before telling the user nothing exists.
-            results = await asyncio.to_thread(
-                self._index.search, need, None, location, age, education_level
-            )
         logger.info(
             "rag search need=%r category=%s location=%s age=%s level=%s scores=%s",
             need, category, location, age, education_level,
@@ -182,7 +183,8 @@ class Assistant(Agent):
                     }
                     for program in results
                 ],
-                "note": "Only these programs exist. " + self._reply_language_note(),
+                "note": "Only these programs exist. Offer only those that provide what was "
+                "asked for; if none do, say nothing was found. " + self._reply_language_note(),
             },
             ensure_ascii=False,
         )

@@ -12,6 +12,7 @@ MODEL_DIR = Path(__file__).with_name("models") / "embeddings"
 EMBEDDING_REPO = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 MIN_SCORE = float(os.getenv("RAG_MIN_SCORE", "0.28"))
 RELATIVE_MARGIN = float(os.getenv("RAG_RELATIVE_MARGIN", "0.12"))
+CATEGORY_BONUS = float(os.getenv("RAG_CATEGORY_BONUS", "0.05"))
 TOP_K = 3
 
 CATEGORIES = (
@@ -119,9 +120,14 @@ class ProgramIndex:
         location: str | None = None,
         age: int | None = None,
         level: str | None = None,
+        prefer_category: str | None = None,
     ) -> list[dict]:
         """Return up to TOP_K programs, best first, each with a `score`. Returns an empty
         list when nothing is similar enough, so the agent never gets a weak match.
+
+        `category` excludes every other category. `prefer_category` only ranks that
+        category a little higher, so a scheme filed under a different category than the
+        caller guessed can still be found.
 
         `level` ("school" or "college") only excludes education programs tagged with a
         different level; programs without a level are always kept."""
@@ -141,14 +147,19 @@ class ProgramIndex:
         for owner, score in zip(self._owners.tolist(), scores.tolist()):
             if owner in candidates and score > best.get(owner, -1.0):
                 best[owner] = score
-        ranked = sorted(best.items(), key=lambda item: item[1], reverse=True)
+
+        def rank_score(index: int) -> float:
+            preferred = prefer_category and self.programs[index]["category"] == prefer_category
+            return best[index] + (CATEGORY_BONUS if preferred else 0.0)
+
+        ranked = sorted(best, key=rank_score, reverse=True)
         if not ranked:
             return []
         # Drop results far below the best match: they are rarely relevant and make the
-        # agent mention weak options.
-        cutoff = max(MIN_SCORE, ranked[0][1] - RELATIVE_MARGIN)
+        # agent mention weak options. The bonus never lifts a weak match above MIN_SCORE.
+        cutoff = rank_score(ranked[0]) - RELATIVE_MARGIN
         return [
-            {**self.programs[index], "score": round(score, 3)}
-            for index, score in ranked[:TOP_K]
-            if score >= cutoff
+            {**self.programs[index], "score": round(best[index], 3)}
+            for index in ranked[:TOP_K]
+            if best[index] >= MIN_SCORE and rank_score(index) >= cutoff
         ]
