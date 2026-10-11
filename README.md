@@ -61,6 +61,8 @@ requests_store.py           SQLite storage and validation for help requests
 notifications.py            Telegram alerts to volunteers
 server.py                   FastAPI: LiveKit token endpoint, serves frontend/dist
 knowledge_base/programs.json  The program knowledge base
+evals/golden_dataset.jsonl  Test cases for retrieval and LLM evaluation
+evals/run_eval.py           Scores the assistant against the test cases
 frontend/                   React app
 ```
 
@@ -128,7 +130,8 @@ The console has no language picker; set `AGENT_LANGUAGE=hi` in `.env` for Hindi.
 
 1. Choose English and press **Start talking**. The assistant greets you.
 2. Say "I need help finding educational support for my younger brother."
-3. It asks whether he is in school or college, then for his class or age and your state.
+3. It asks whether he is in school or college, and his class or age if needed. It asks only
+   what changes the search, so a detailed first message can go straight to results.
 4. It searches the knowledge base and describes two or three programs. Cards with the
    official source link appear under the conversation.
 5. Say you would like a volunteer to help you apply. It asks permission, takes your phone
@@ -156,13 +159,19 @@ as a filter. `audience` (for example `farmer` or `household`) is descriptive onl
 
 Categories: `education`, `healthcare`, `financial_assistance`, `employment`, `disability`,
 `women_child_welfare`, `food`, `agriculture`, `housing`, `insurance`, `pension`. A new
-category must also be added to `Category` in `agent.py` so the agent can search it.
+category must also be added to `CATEGORIES` in `rag.py` and to the `search_programs`
+docstring in `agent.py` so the agent can search it.
+
+`keywords` lists everyday names and Hindi or Hinglish terms for a scheme (for example
+"MGNREGA", "रोज़गार", "septic tank"). They are search aids only and must not state rules
+or amounts.
 
 Search applies the `category`, `location`, age and level filters first, then ranks by
-similarity.
-Matches below `RAG_MIN_SCORE` (default 0.3) are dropped, so when nothing fits, the
-assistant says it couldn't find a verified program and offers a volunteer instead of
-guessing.
+similarity, embedding each field and each keyword as its own short passage. Matches below
+`RAG_MIN_SCORE` (default 0.28), or more than `RAG_RELATIVE_MARGIN` (default 0.12) below the
+best match, are dropped. Scores alone cannot tell "relevant" from "same topic" (see
+Improvements), so the agent is also told to treat results that don't fit the person as no
+match, and to say when a scheme's rules clearly exclude them.
 
 ## Safety
 
@@ -175,6 +184,205 @@ guessing.
   optional name, and a short summary of the need.
 - The Telegram alert includes the phone number so the volunteer can call back. Use a
   private volunteer group.
+
+## Improvements
+
+The assistant is measured against a golden dataset, and changes are kept only when the
+numbers improve.
+
+### Golden dataset
+
+`evals/golden_dataset.jsonl` has 144 test cases (96 English, 48 Hindi) and covers all 43
+schemes.
+
+| Case type | Cases | Tests |
+| --- | --- | --- |
+| `single_match`, `multi_match` | 82 | Retrieval, faithfulness, tool arguments |
+| `ineligible_lookalike` | 10 | Says when a scheme's rules exclude the person |
+| `no_match` | 12 | Says it found nothing instead of offering a weak match |
+| `ask_followup`, `multi_turn` | 16 | Asks one question at a time, searches when ready |
+| `crisis` | 10 | Gives helplines first |
+| `out_of_scope` | 6 | No medical or legal advice |
+| `human_handoff` | 8 | Consent, number read-back, saving the request |
+
+Each case has the query, any earlier turns (`history`), the relevant scheme IDs with
+graded relevance (2 = best answer, 1 = also relevant), a reference answer built only from
+`programs.json`, the expected intent, tool and tool arguments, and a safety expectation.
+`input_style` marks romanized Hindi and speech-recognition errors. Location is left out of
+filters and arguments for now, since nearly every scheme is All India.
+
+`split` holds out about a third of the cases as `test`. Tune prompts and settings on `dev`
+and check `test` only occasionally, so the scores are not tuned to the test set.
+
+### Running the evals
+
+```powershell
+python evals/run_eval.py                  # retrieval scores on the dev cases (no LLM tokens)
+python evals/run_eval.py --failures       # also list the cases that missed
+python evals/run_eval.py --llm --limit 10 # run the real agent on 10 cases (uses Groq tokens)
+```
+
+The retrieval eval prints each metric with a plain explanation, plus breakdowns by case
+type, language and input style. The LLM eval plays each case through the real agent and
+checks five things: the right tool, the right arguments, the reply language, grounding
+(only schemes and amounts from the search), and the case's safety rule. It saves results
+to `evals/results/` as it goes, so when Groq's limit is reached you can run the same command
+later and it continues. The full set needs roughly 360k tokens, about two days of Groq's
+free tier. `--split test`, `--type crisis` and `--fresh` are also available; see the top of
+`evals/run_eval.py`.
+
+The LLM eval uses the same `LLM_MODEL`, `LLM_BASE_URL` and `LLM_API_KEY` settings as the
+agent, so it can run on another provider when Groq's limit runs out. Each model gets its
+own results file, so runs never mix.
+
+| Provider | `LLM_BASE_URL` | `LLM_MODEL` | Notes |
+| --- | --- | --- | --- |
+| Groq | `https://api.groq.com/openai/v1` | `openai/gpt-oss-120b` | Production model; free tier ~200k tokens a day |
+| Ollama Cloud | `https://ollama.com/v1` | `gpt-oss:120b` | Same model; key from ollama.com/settings/keys |
+| Local Ollama | `http://127.0.0.1:11434/v1` | e.g. `qwen3.5:4b` | Offline and free; set `LLM_API_KEY=ollama`, `LLM_TIMEOUT=300`, and use `--pause 0` |
+
+Small local models are slow on a laptop CPU (about two minutes per reply) and weaker than
+the production model, especially in Hindi. Use them to catch broken behaviour, and report
+scores from `gpt-oss-120b`.
+
+### Retrieval baseline
+
+With the agent's filters, over the 99 retrieval cases:
+
+| Recall@3 | Precision@3 | Precision@1 | MRR | nDCG@3 |
+| --- | --- | --- | --- | --- |
+| 0.909 | 0.598 | 0.828 | 0.891 | 0.869 |
+
+English scores higher than Hindi (MRR 0.917 vs 0.838). The relative cutoff was chosen on
+the whole dataset before the split existed, so these numbers are slightly optimistic.
+
+### Evaluation results (October 2026)
+
+Final scores on the 45 held-out test cases, using the production model (Groq
+`gpt-oss-120b`). These are from before the prompt fixes described below.
+
+| Retrieval | Score |
+| --- | --- |
+| Recall@3 | 0.906 |
+| MRR | 0.901 |
+| No-match questions that still got results | 4 / 4 |
+
+| Agent behaviour | Score |
+| --- | --- |
+| Grounded (no invented schemes or amounts) | 100% |
+| Replied in the right language | 100% |
+| Followed the safety rule | 91% |
+| Right tool (searched, asked or saved correctly) | 62% |
+| Passed every check on a single reply | 40% |
+| Asked a question instead of searching | 38% |
+| Serious failures (harmful or misleading) | 2% (1 of 45) |
+
+The full 144-case set on Ollama Cloud (`gpt-oss:120b`) gave similar results: 38% passed
+every check, 99% grounded, 6% serious failures.
+
+What the scores show:
+- **Answers are reliable.** The agent never invented a scheme or amount on the test set
+  and always kept the chosen language.
+- **It asks too many questions.** In about 4 out of 10 conversations it asked something it
+  didn't need (an age, a school, an existing health card) before searching.
+- **112 was over-used.** Medicine and legal questions were told to call 112, and crisis
+  replies rarely named the specific helpline (181, 1098 or Tele-MANAS 14416).
+
+The checks score one reply at a time, so an unnecessary question counts as a full failure
+even though the person can simply answer it.
+
+**After the prompt fixes** (99 dev cases, Ollama Cloud `gpt-oss:120b`):
+
+| | Before | After |
+| --- | --- | --- |
+| Passed every check | 40% | 84% |
+| Right tool | 59% | 95% |
+| Followed the safety rule | 85% | 97% |
+| Asked a question instead of searching | 37 cases | 3 |
+| Told to call 112 for a non-emergency | 3 | 0 |
+| Serious failures | 5 | 3 |
+
+These are dev-set numbers, measured on the cases used for tuning, so they are optimistic.
+
+**Final check on the held-out test set** (45 cases, Groq `gpt-oss-120b`, same cases before
+and after the fixes):
+
+| | Before | After |
+| --- | --- | --- |
+| Passed every check | 40% | 69% |
+| Right tool | 62% | 96% |
+| Followed the safety rule | 91% | 93% |
+| Grounded | 100% | 98% |
+| Replied in the right language | 100% | 100% |
+| Asked a question instead of searching | 17 cases | 2 |
+| Told to call 112 for a non-emergency | 1 | 0 |
+| Said "nothing found" when a scheme exists | 3 | 4 |
+| Serious failures (checked by hand) | 1 | 2 |
+
+The test set improved less than dev (69% vs 84%), as expected for cases not used in tuning.
+Both remaining serious failures are questions with no right answer (an MBA abroad, wedding
+costs) where the agent offered an unrelated scheme that the search returned.
+
+### Done
+
+- **Keywords per scheme**, each embedded as its own passage. Together with the relative
+  cutoff, on the original 120 cases, Precision@3 rose from 0.437 to 0.570, Precision@1 from
+  0.772 to 0.823 and MRR from 0.838 to 0.884, for a small recall cost (0.918 to 0.905).
+- **Relative cutoff**: results more than 0.12 below the best match are dropped.
+- **Prompt rules** for results that don't fit, and for schemes whose rules exclude the
+  person.
+- **Dataset**: added ineligible lookalikes, romanized Hindi, speech-error and multi-turn
+  cases, graded relevance, and the dev/test split.
+- **Knowledge base**: vague entries rewritten with figures checked against official sources;
+  non-schemes removed.
+- **Search first**: the agent searches as soon as the need is clear and asks a question only
+  when the need is vague (such as just "a loan") or school vs college is unknown. It no
+  longer asks for the state, and doesn't ask for consent twice.
+- **112 only for real danger**: medicine and legal questions are referred to a doctor or
+  lawyer, and each crisis type gets its own helpline (Tele-MANAS 14416, 181, Childline 1098)
+  together with 112.
+- **Search fallback**: if a category-filtered search finds nothing, it searches again
+  without the category (crop insurance is filed under agriculture, not insurance).
+- **Tolerant tool arguments**: some providers ignore allowed values, sending "class 8" as a
+  level or "scholarship" as a category. The agent now cleans these up instead of failing.
+
+### Known gaps
+
+- **No-match detection.** Retrieval returns schemes for all 12 no-match questions: their
+  scores (0.39 to 0.58) overlap with correct matches (from 0.43). Saying "nothing found"
+  currently depends on the model judging fit, which the LLM eval needs to confirm.
+- **Crisis questions** retrieve poorly (Recall@3 0.43). This is acceptable because the
+  helplines come from the prompt, not from search.
+- **Irrelevant follow-up questions** sometimes happen, such as asking about the daughter's
+  school when the need is wedding costs.
+
+### Next
+
+1. Stop offering unrelated schemes for questions with no right answer. This is now the
+   main source of serious failures, and the search can't solve it alone (see Known gaps).
+   A reranker would help most; a stricter prompt rule is the cheaper first step.
+2. Remaining issues:
+   - When the model picks a different category from ours (for example "financial
+     assistance" for a tea-shop loan), the right scheme is filtered out and the agent says
+     nothing fits. Using the category as a preference rather than a hard filter would fix
+     this.
+   - A sick baby or a domestic-violence question is sometimes answered with the crisis
+     helplines but no search, so free care or the One Stop Centre isn't mentioned.
+   - Rare but serious: in one Hindi handoff the agent said the request was saved when it
+     wasn't, and in one case it suggested an unrelated scheme for a tractor subsidy.
+3. Human review of the dataset, with a native speaker for the Hindi cases.
+4. More romanized Hindi and speech-error cases (10 so far).
+
+### Planned, needs approval (new models or data)
+
+- A reranker model that scores the question and scheme together. It is the most likely fix
+  for no-match detection, but it adds a model download and latency.
+- A stronger multilingual embedding model (for example `multilingual-e5-base` or `bge-m3`)
+  for better Hindi retrieval.
+- Schemes from two or three states, so location filtering can be tested.
+- Re-checking schemes whose guidelines ended on 31 March 2026 and are still running without
+  a formal extension: NAMASTE, NAPS, Saksham Anganwadi and POSHAN 2.0, PM YASASVI, NMMSS
+  and ADIP.
 
 ## Known limitations
 

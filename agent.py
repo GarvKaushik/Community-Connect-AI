@@ -3,7 +3,6 @@ import json
 import logging
 import os
 import re
-from typing import Literal
 
 from dotenv import load_dotenv
 
@@ -15,7 +14,7 @@ from faster_whisper import WhisperModel
 import requests_store
 from local_speech import FasterWhisperSTT, PiperTTS, load_piper_voices
 from notifications import notify_help_request
-from rag import Embedder, ProgramIndex
+from rag import CATEGORIES, Embedder, ProgramIndex
 
 load_dotenv()
 
@@ -37,19 +36,21 @@ GREETINGS = {
 def _first_sentences(text: str, count: int = 2) -> str:
     return " ".join(re.split(r"(?<=[.!?])\s+", text.strip())[:count])
 
-Category = Literal[
-    "education",
-    "healthcare",
-    "financial_assistance",
-    "employment",
-    "disability",
-    "women_child_welfare",
-    "food",
-    "agriculture",
-    "housing",
-    "insurance",
-    "pension",
-]
+
+# Some providers don't enforce allowed values in tool arguments, so the model may send
+# "scholarship" as a category or "class 8" as a level. Clean these up rather than fail.
+def _clean_category(value: str | None) -> str | None:
+    category = (value or "").strip().lower().replace(" ", "_")
+    return category if category in CATEGORIES else None
+
+
+def _clean_level(value: str | None) -> str | None:
+    level = (value or "").strip().lower()
+    if re.search(r"college|graduat|degree|universit|diploma|b\.?tech|\bb\.?a\b|\bb\.?sc\b", level):
+        return "college"
+    if re.search(r"school|class|grade|standard|matric|\d", level):
+        return "school"
+    return None
 
 INSTRUCTIONS = """\
 You are CommunityConnect, a voice assistant helping people in India find government support
@@ -57,23 +58,35 @@ programs. You are not an official, social worker, doctor or lawyer; give no medi
 Warm, simple, max 30 words, one question per reply. Spoken aloud: no lists, markdown, links
 or brackets. {language_rule}
 
-1 Ask only what is missing: who needs help, their age (for students, school or college),
-  and their state or city.
-  Never re-ask. Don't ask income, caste or religion.
-  Example: "I need educational support for my younger brother." -> "I can help. Is he currently in school or college?"
-2 Once you know all three, call search_programs.
-3 Describe one or two results, a sentence each: what it gives, why it may fit. Say "may be
-  eligible", never promise. Then offer more details or help applying.
+1 Search first. If the message says what help is needed, call search_programs right away
+  with what you know. Do not first ask for age, school, income, location or existing cards.
+  Ask one question only if the need itself is unclear (such as just "a loan" or "money" with
+  no purpose), or for education when you don't know if it is school or college. Never ask
+  income, caste or religion.
+  "I need educational support for my younger brother." -> "I can help. Is he currently in school or college?"
+  "My son is in class 8 at a government school, we earn 2 lakh" -> search now.
+  "My father needs an operation and we are poor" -> search now.
+2 You can ask a follow-up after showing results, if it would change which ones fit.
+3 Describe one or two results that fit, a sentence each: what it gives, why it may fit. Say
+  "may be eligible"; never say they qualify or are eligible. If a result's rules clearly exclude them (age, income,
+  school type, land), say so briefly instead of offering it. Then offer more details or help.
 4 Mention only programs and facts from the latest search result. Never invent schemes,
   amounts, documents or steps. Full details and official links are on the user's screen.
-5 On NO_VERIFIED_MATCH say: "I couldn't find a verified program matching your situation.
-  I can connect you with a volunteer who may be able to help."
-6 For a volunteer: ask permission to share their details, get a phone number (name
-  optional), read it back, and call request_human_help after they confirm. It is saved only
-  when that tool says so; never claim it before.
+5 On NO_VERIFIED_MATCH, or when no result actually fits their need, say: "I couldn't find
+  a verified program matching your situation. I can connect you with a volunteer who may be
+  able to help."
+6 For a volunteer: ask permission to share their details unless they already agreed, get a
+  phone number (name optional), read it back, and call request_human_help after they
+  confirm. It is saved only when that tool says so; never claim it before.
 
-Danger, abuse or self-harm: first say to call 112 (women 181, children 1098, Tele-MANAS
-mental health 14416), then offer a volunteer.\
+Only when someone is in danger now, or mentions abuse, violence, self-harm or a child at
+risk: first give both 112 and the matching helpline, then offer a volunteer.
+Self-harm or not wanting to live: Tele-MANAS 14416. A woman facing violence: 181.
+A child in danger, child labour or child marriage: Childline 1098.
+Asking which medicine to take, what a symptom means, or what to do in a legal dispute is
+not an emergency: say you can't advise, suggest a doctor or government health centre, or a
+lawyer, and do not mention 112. But help paying for treatment or free hospital care is a
+program need: search for it.\
 """
 
 
@@ -123,20 +136,31 @@ class Assistant(Agent):
         self,
         context: RunContext,
         need: str,
-        category: Category | None = None,
+        category: str | None = None,
         location: str | None = None,
         age: int | None = None,
-        education_level: Literal["school", "college"] | None = None,
+        education_level: str | None = None,
     ) -> str:
         """Search verified programs.
 
         Args:
             need: The need in English, e.g. "school scholarship for a 12 year old".
+            category: One of education, healthcare, financial_assistance, employment, disability,
+                women_child_welfare, food, agriculture, housing, insurance, pension.
             location: Indian state or city, in English.
+            education_level: "school" or "college".
         """
+        category = _clean_category(category)
+        education_level = _clean_level(education_level)
         results = await asyncio.to_thread(
             self._index.search, need, category, location, age, education_level
         )
+        if not results and category:
+            # The model's category can differ from ours (e.g. crop insurance is filed under
+            # agriculture, not insurance), so retry before telling the user nothing exists.
+            results = await asyncio.to_thread(
+                self._index.search, need, None, location, age, education_level
+            )
         logger.info(
             "rag search need=%r category=%s location=%s age=%s level=%s scores=%s",
             need, category, location, age, education_level,
@@ -170,7 +194,7 @@ class Assistant(Agent):
         summary: str,
         phone: str,
         name: str | None = None,
-        category: Category | None = None,
+        category: str | None = None,
         location: str | None = None,
     ) -> str:
         """Save a volunteer callback request, after the caller confirmed their number.
@@ -178,7 +202,9 @@ class Assistant(Agent):
         Args:
             summary: 1-2 English sentences on who needs what, with key facts. Say "the caller";
                 no gender guesses, no phone number.
+            category: One of the search_programs categories.
         """
+        category = _clean_category(category)
         if self._request_id is not None:
             return f"Request #{self._request_id} already exists. Tell them a volunteer will call."
         try:

@@ -11,6 +11,7 @@ PROGRAMS_PATH = Path(__file__).with_name("knowledge_base") / "programs.json"
 MODEL_DIR = Path(__file__).with_name("models") / "embeddings"
 EMBEDDING_REPO = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 MIN_SCORE = float(os.getenv("RAG_MIN_SCORE", "0.28"))
+RELATIVE_MARGIN = float(os.getenv("RAG_RELATIVE_MARGIN", "0.12"))
 TOP_K = 3
 
 CATEGORIES = (
@@ -66,6 +67,9 @@ def program_passages(program: dict) -> list[str]:
     category = program["category"].replace("_", " ")
     passages = [f"{program['name']}. {category}. {program['description']}"]
     passages += [f"{category}: {program[field]}" for field in ("eligibility", "benefits") if program[field]]
+    # One short passage per keyword (common names, Hindi/Hinglish terms) so everyday words
+    # like "MGNREGA" or "septic tank" match even when the official text uses other words.
+    passages += [f"{program['name']}: {keyword}" for keyword in program.get("keywords", [])]
     return passages
 
 
@@ -138,8 +142,13 @@ class ProgramIndex:
             if owner in candidates and score > best.get(owner, -1.0):
                 best[owner] = score
         ranked = sorted(best.items(), key=lambda item: item[1], reverse=True)
+        if not ranked:
+            return []
+        # Drop results far below the best match: they are rarely relevant and make the
+        # agent mention weak options.
+        cutoff = max(MIN_SCORE, ranked[0][1] - RELATIVE_MARGIN)
         return [
             {**self.programs[index], "score": round(score, 3)}
             for index, score in ranked[:TOP_K]
-            if score >= MIN_SCORE
+            if score >= cutoff
         ]
